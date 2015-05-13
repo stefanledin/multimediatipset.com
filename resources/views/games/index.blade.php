@@ -9,10 +9,14 @@
 					@if($active_games)
 					<div class="collection with-header">
 						@foreach($active_games as $game)
-							<a href="games/{{ $game->id }}" class="orange-text collection-item">{{ $game->name }}</a>
+							<a href="games/{{ $game->id }}" class="orange-text collection-item">
+								{{ $game->name }}
+								<span class="badge">{{ count($game->predictions) }} tips</span>
+							</a>
 						@endforeach
 					</div>
 					@endif
+					<a href="{{ route('games.create') }}" class="btn orange">Nytt</a>
 				</div>
 			</div>
 		</div>

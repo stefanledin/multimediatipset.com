@@ -8,7 +8,7 @@
 	<body>
 		<nav>
 			<div class="nav-wrapper indigo lighten-1">
-				<a href="#" class="brand-logo center">multimediatipset.com ™</a>
+				<a href="{{ route('home') }}" class="brand-logo center">multimediatipset.com ™</a>
 			</div>
 		</nav>
 

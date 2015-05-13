@@ -4,10 +4,13 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Game;
+use App\Prediction;
 
 use Illuminate\Http\Request;
 
 class GamesController extends Controller {
+
+	protected $gameStatuses = ['open' => 'Öppen', 'closed' => 'Stängd', 'finished' => 'Avslutad'];
 
 	/**
 	 * Display a listing of the resource.
@@ -27,7 +30,7 @@ class GamesController extends Controller {
 	 */
 	public function create()
 	{
-		//
+		return view('games.create');
 	}
 
 	/**
@@ -35,9 +38,17 @@ class GamesController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function store()
+	public function store(Request $request)
 	{
-		//
+		$game = Game::create([
+            'name' => $request->input('name'),
+            'price' => $request->input('price'),
+            'status' => $request->input('status')
+        ]);
+        if ($game) {
+			return redirect()->route('games.show', $game);
+		}
+		dd($game);
 	}
 
 	/**
@@ -48,7 +59,8 @@ class GamesController extends Controller {
 	 */
 	public function show($id)
 	{
-		return view('games.single', ['game' => Game::find($id)]);
+		$game = Game::find($id);
+		return view('games.single', ['game' => $game]);
 	}
 
 	/**
@@ -59,7 +71,10 @@ class GamesController extends Controller {
 	 */
 	public function edit($id)
 	{
-		//
+		return view('games.edit', [
+			'game' => Game::find($id),
+			'statuses' => $this->gameStatuses
+		]);
 	}
 
 	/**
@@ -68,9 +83,14 @@ class GamesController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
+	public function update(Request $request, $id)
 	{
-		//
+		$game = Game::find($id);
+		$game->name = $request->input('name');
+		$game->price = $request->input('price');
+		$game->status = $request->input('status');
+		$game->save();
+		return redirect()->route('games.show', $game->id);
 	}
 
 	/**
@@ -81,7 +101,8 @@ class GamesController extends Controller {
 	 */
 	public function destroy($id)
 	{
-		//
+		Game::destroy($id);
+		return redirect()->back();
 	}
 
 }

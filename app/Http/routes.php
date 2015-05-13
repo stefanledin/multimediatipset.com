@@ -10,6 +10,6 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-
-Route::get('/', 'GamesController@index');
+Route::get('/', ['as' => 'home', 'uses' => 'GamesController@index']);
 Route::resource('games', 'GamesController');
+Route::resource('predictions', 'PredictionsController');
