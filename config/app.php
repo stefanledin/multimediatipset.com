@@ -26,7 +26,7 @@ return [
 	|
 	*/
 
-	'url' => 'http://localhost',
+	'url' => 'http://multimediatipset.app',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -146,6 +146,8 @@ return [
 		'App\Providers\EventServiceProvider',
 		'App\Providers\RouteServiceProvider',
 
+		'Laravel\Socialite\SocialiteServiceProvider',
+
 	],
 
 	/*
@@ -195,6 +197,8 @@ return [
 		'View'      => 'Illuminate\Support\Facades\View',
 		'Form' => 'Collective\Html\FormFacade',
       	'Html' => 'Collective\Html\HtmlFacade',
+
+      	'Socialize' => 'Laravel\Socialite\Facades\Socialite',
 	],
 
 ];
