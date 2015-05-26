@@ -14,8 +14,6 @@ class AddForeignKeysToPredictionsTable extends Migration {
 	{
 		Schema::table('predictions', function (Blueprint $table)
 		{
-			#$table->integer('user_id')->unsigned();
-			#$table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 			$table->integer('game_id')->unsigned();
 			$table->foreign('game_id')->references('id')->on('games')->onDelete('cascade');
 		});
@@ -30,8 +28,7 @@ class AddForeignKeysToPredictionsTable extends Migration {
 	{
 		Schema::table('predictions', function (Blueprint $table)
 		{
-			#$table->dropColumn('user_id');
-			$table->dropColumn('game_id');
+			$table->dropForeign('predictions_game_id_foreign');
 		});
 	}
 
