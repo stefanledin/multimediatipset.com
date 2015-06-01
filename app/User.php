@@ -22,7 +22,10 @@ class User extends Model implements AuthenticatableContract {
 	 */
 	protected $fillable = ['uid', 'username', 'first_name', 'last_name', 'is_admin'];
 
-	public function predictions()
+    /**
+     * The user has many predictions
+     */
+    public function predictions()
 	{
 		return $this->hasMany('App\Prediction');
 	}
