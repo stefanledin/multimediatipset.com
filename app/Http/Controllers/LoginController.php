@@ -28,10 +28,12 @@ class LoginController extends Controller {
     {
         $facebookUser = $this->socialLogin->handleCallback();
         try {
-            $user = User::where('uid', $facebookUser->uid)->firstOrFail();
+            $user = User::where('uid', $facebookUser->id)->firstOrFail();
             Auth::login($user);
         } catch (Exception $e) {
-            
+            $this->dispatch(
+                new \App\Commands\RegisterUser($facebookUser)
+            );
         }
     }
 

@@ -37,15 +37,27 @@ class AuthTest extends TestCase {
 
         $socialLogin->shouldReceive('login')->once();
         $socialLogin->shouldReceive('handleCallback')->once()->andReturn((object)[
-            'uid' => 'unknown'
+            'id' => 'unknown',
+            'name' => 'John Doe',
+            'user' => array(
+                'first_name' => 'John',
+                'last_name' => 'Doe'
+            )
+        ]);
+
+        $this->notSeeInDatabase('users', [
+            'uid' => 'unknown',
         ]);
 
         $this->visit('/login');
         $this->visit('/login/redirect');
 
-        $this->notSeeInDatabase('users', [
+        $this->seeInDatabase('users', [
             'uid' => 'unknown'
         ]);
+
+        $this->assertTrue(Auth::check());
+        $this->assertEquals('unknown', Auth::user()->uid);
     }
 
 
