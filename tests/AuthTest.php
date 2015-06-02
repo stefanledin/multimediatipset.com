@@ -17,14 +17,22 @@ class AuthTest extends TestCase {
         $this->app->instance('App\Login\SocialLogin', $socialLogin);
 
         $socialLogin->shouldReceive('login')->once();
+<<<<<<< Updated upstream
         $socialLogin->shouldReceive('handleCallback')->once()->andReturn((object)[
             'uid' => '12345'
+=======
+        $socialLogin->shouldReceive('handleCallback')->once()->andReturn((object) [
+            'id' => '12345'
+>>>>>>> Stashed changes
         ]);
 
         $this->visit('/login');
         $this->visit('/login/redirect');
 
+<<<<<<< Updated upstream
         $this->assertTrue(Auth::check());
+=======
+>>>>>>> Stashed changes
         $this->assertEquals('12345', Auth::user()->uid);
     }
 

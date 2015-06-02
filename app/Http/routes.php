@@ -2,6 +2,10 @@
 
 use App\User;
 
+Route::get('/json', function(){
+	return json_encode(array('slask' => 'plask'));
+});
+
 Route::get('/', ['as' => 'home', 'uses' => 'GamesController@index']);
 
 Route::get('login', ['uses' => 'LoginController@login']);
