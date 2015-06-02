@@ -4,8 +4,11 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Login\SocialLogin;
 
+use Exception;
 use Illuminate\Http\Request;
 use Socialize;
+use App\User;
+use Auth;
 
 class LoginController extends Controller {
 
@@ -24,7 +27,14 @@ class LoginController extends Controller {
     public function handleFacebookCallback()
     {
         $facebookUser = $this->socialLogin->handleCallback();
-        #die(var_dump($facebookUser));
+        try {
+            $user = User::where('uid', $facebookUser->uid)->firstOrFail();
+            if ($user) {
+                Auth::login($user);
+            }
+        } catch (Exception $e) {
+            
+        }
     }
 
 
