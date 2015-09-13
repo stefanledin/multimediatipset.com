@@ -1,9 +1,15 @@
 <?php
 
-use Laracasts\Integrated\Extensions\Laravel as IntegrationTest;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class TestCase extends IntegrationTest {
+class TestCase extends Illuminate\Foundation\Testing\TestCase {
 
+	use DatabaseTransactions;
+
+	protected $baseUrl = 'http://localhost';
+	
 	/**
 	 * Creates the application.
 	 *
