@@ -28,11 +28,11 @@ class UserTableSeeder extends Seeder {
     public function run()
     {
     	$user = User::create([
-    		'uid' => '12345',
+    		'uid' => '1332653839',
     		'username' => 'The Ledinator',
     		'first_name' => 'Stefan',
     		'last_name' => 'Ledin',
-    		'is_admin' => 1
+    		'is_admin' => true
 		]);
     }
 

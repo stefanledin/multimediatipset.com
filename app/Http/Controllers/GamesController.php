@@ -12,6 +12,11 @@ class GamesController extends Controller {
 
 	protected $gameStatuses = ['open' => 'Öppen', 'closed' => 'Stängd', 'finished' => 'Avslutad'];
 
+	public function __construct()
+	{
+		$this->middleware('auth', ['except' => 'index']);
+	}
+
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -48,7 +53,6 @@ class GamesController extends Controller {
         if ($game) {
 			return redirect()->route('games.show', $game);
 		}
-		dd($game);
 	}
 
 	/**
@@ -102,7 +106,7 @@ class GamesController extends Controller {
 	public function destroy($id)
 	{
 		Game::destroy($id);
-		return redirect()->back();
+		return redirect(route('home'));
 	}
 
 }

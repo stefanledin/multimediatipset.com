@@ -35,7 +35,13 @@ class LoginController extends Controller {
                 new \App\Commands\RegisterUser($facebookUser)
             );
         }
+        return redirect(route('home'));
     }
 
+    public function logout()
+    {
+        Auth::logout();
+        return redirect(route('home'));
+    }
 
 }

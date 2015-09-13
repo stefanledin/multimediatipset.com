@@ -6,12 +6,12 @@ class SocialLogin {
 
     public function login()
     {
-        return Socialize::with('facebook')->redirect();
+        return Socialize::driver('facebook')->redirect();
     }
 
     public function handleCallback()
     {
-        return Socialize::with('facebook')->user();
+        return Socialize::driver('facebook')->user();
     }
 
 }

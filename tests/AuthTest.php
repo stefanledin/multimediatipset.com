@@ -2,8 +2,6 @@
 
 class AuthTest extends TestCase {
 
-	protected $baseUrl = 'http://multimediatipset.app';
-
     public function tearDown()
     {
         Mockery::close();
@@ -18,7 +16,12 @@ class AuthTest extends TestCase {
 
         $socialLogin->shouldReceive('login')->once();
         $socialLogin->shouldReceive('handleCallback')->once()->andReturn((object) [
-            'id' => '12345'
+            'id' => '12345',
+            'name' => 'Stefan Ledin',
+            'user' => array(
+                'first_name' => 'Stefan',
+                'last_name' => 'Ledin'
+            )
         ]);
 
         $this->visit('/login');
@@ -37,7 +40,7 @@ class AuthTest extends TestCase {
 
         $socialLogin->shouldReceive('login')->once();
         $socialLogin->shouldReceive('handleCallback')->once()->andReturn((object)[
-            'id' => 'unknown',
+            'id' => '00000',
             'name' => 'John Doe',
             'user' => array(
                 'first_name' => 'John',
@@ -46,18 +49,31 @@ class AuthTest extends TestCase {
         ]);
 
         $this->notSeeInDatabase('users', [
-            'uid' => 'unknown',
+            'uid' => '00000',
         ]);
 
         $this->visit('/login');
         $this->visit('/login/redirect');
 
         $this->seeInDatabase('users', [
-            'uid' => 'unknown'
+            'uid' => '00000'
         ]);
 
         $this->assertTrue(Auth::check());
-        $this->assertEquals('unknown', Auth::user()->uid);
+        $this->assertEquals('00000', Auth::user()->uid);
+    }
+
+    public function test_user_can_log_out()
+    {
+        $user = factory(App\User::class)->create();
+        $this->actingAs($user);
+
+        $this->assertTrue(Auth::check());
+
+        $this->visit('/')
+            ->click('Logga ut');
+
+        $this->assertFalse(Auth::check());
     }
 
 

@@ -9,6 +9,14 @@
 		<nav>
 			<div class="nav-wrapper indigo lighten-1">
 				<a href="{{ route('home') }}" class="brand-logo center">multimediatipset.com ™</a>
+				<ul id="nav-mobile" class="right">
+					@if (!Auth::check())
+						<li><a href="/login">Logga in</a></li>
+					@else 
+						<li><a href="#">{{ Auth::user()->username }}</a></li>
+						<li><a href="{{ route('logout') }}">Logga ut</a></li>
+					@endif
+				</ul>
 			</div>
 		</nav>
 

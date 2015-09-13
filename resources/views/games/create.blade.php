@@ -20,6 +20,13 @@
                             </div>
                             <div class="input-field col s12">
                                 <select name="status" class="browser-default">
+                                    <option disabled selected>Typ av tips</option>
+                                    <option value="">Tabellplaceringar</option>
+                                    <option value="">Resultat</option>
+                                </select>
+                            </div>
+                            <div class="input-field col s12">
+                                <select name="status" class="browser-default">
                                     <option disabled selected>Status</option>
                                     <option value="open">Öppen</option>
                                     <option value="closed">Stängd</option>
