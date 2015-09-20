@@ -9,6 +9,8 @@
 						<a href="{{ route('home') }}" class="btn grey darken-2"><i class="mdi-hardware-keyboard-arrow-left left"></i>Tillbaka</a>
 					</div>
 					<span class="card-title">{{ $game->name }}</span>
+					<p>Pris: {{ $game->price }} kr.</p>
+					<p>I potten: {{ $game->inPot() }} kr</p>
 					@if(count($game->predictions) != 0)
 					<ul class="collection">
 						@foreach($game->predictions as $prediction)

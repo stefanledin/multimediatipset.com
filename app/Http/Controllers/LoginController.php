@@ -3,6 +3,7 @@
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Login\SocialLogin;
+use App\Commands\RegisterUser;
 
 use Exception;
 use Illuminate\Http\Request;
@@ -32,7 +33,7 @@ class LoginController extends Controller {
             Auth::login($user);
         } catch (Exception $e) {
             $this->dispatch(
-                new \App\Commands\RegisterUser($facebookUser)
+                new RegisterUser($facebookUser)
             );
         }
         return redirect(route('home'));

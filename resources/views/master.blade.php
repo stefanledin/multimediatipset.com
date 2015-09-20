@@ -14,7 +14,7 @@
 					@if (!Auth::check())
 						<li><a href="/login">Logga in</a></li>
 					@else 
-						<li><a href="#">{{ Auth::user()->username }}</a></li>
+						<li><a href="/users/{{ Auth::user()->id }}">{{ Auth::user()->username }}</a></li>
 						<li><a href="{{ route('logout') }}">Logga ut</a></li>
 					@endif
 				</ul>

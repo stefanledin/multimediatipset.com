@@ -112,4 +112,17 @@ class GameCreateTest extends TestCase {
 		$this->visit('games/create')->seePageIs('/');
 	}
 
+	public function test_money_in_the_pot()
+	{
+		$game = App\Game::create([
+			'price' => 20
+		]);
+		$game->predictions()->saveMany([
+			App\Prediction::create(['prediction' => serialize(array())]),
+			App\Prediction::create(['prediction' => serialize(array())])
+		]);
+
+		$this->assertEquals(40, $game->inPot());
+	}
+
 }

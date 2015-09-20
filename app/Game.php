@@ -11,4 +11,13 @@ class Game extends Model {
 		return $this->hasMany('App\Prediction');
 	}
 
+	public function inPot()
+	{
+		$predictions = $this->predictions;
+		if (count($predictions) != 0) {
+			return count($predictions) * $this->price;
+		}
+		return 0;
+	}
+
 }
