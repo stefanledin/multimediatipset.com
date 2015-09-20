@@ -39,6 +39,7 @@
 					@if($game->status == 'open')
 					<div class="row">
 						{!! Form::open(['route' => 'predictions.store', 'class' => 'col s12 white']) !!}
+							<p>Dra och släpp lagen i den ordning du tror de slutar i tabellen:</p>
 							{!! Form::hidden('game_id', $game->id) !!}
 							@if($game->game_data)
 								<ol class="sortable">
