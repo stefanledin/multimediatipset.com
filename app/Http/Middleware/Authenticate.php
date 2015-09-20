@@ -32,7 +32,7 @@ class Authenticate {
 	 */
 	public function handle($request, Closure $next)
 	{
-		if (!$this->auth->user()->is_admin) {
+		if (!$this->auth->check() || !$this->auth->user()->is_admin) {
 			return redirect()->route('home');
 		}
 

@@ -18,7 +18,35 @@
                             	{!! Form::number('price') !!}
                             </div>
                             <div class="input-field col s12">
+                            	<ol>
+								@foreach(unserialize($game->game_data) as $team)
+									<li>{!! Form::text('game-data[]', $team) !!}</li>
+								@endforeach
+								</ol>
+                            </div>
+                            <div class="input-field col s12">
                             	{!! Form::select('status', $statuses, $game->status, ['class' => 'browser-default']) !!}
+                            </div>
+                            <div class="input-field col s12">
+                            	@if(count($game->predictions) != 0)
+								<ul class="collection">
+									@foreach($game->predictions as $prediction)
+										<li class="collection-item avatar">
+											<img src="{{ $prediction->user->profile_picture_thumbnail }}" class="circle">
+											<span class="title">{{ $prediction->user->username }} har tippat:</span>
+											<ol>
+												@foreach(unserialize($prediction->prediction) as $team)
+													<li>{{ $team }}</li>
+												@endforeach
+											</ol>
+											<p>
+												{!! Form::radio('winner', $prediction->user->id, false, ['id' => 'winner_'.$prediction->user->id]) !!}
+												{!! Form::label('winner_'.$prediction->user->id, 'Vinnare') !!}
+											</p>
+										</li>
+									@endforeach
+								</ul>
+								@endif
                             </div>
 							<div class="input-field col s12">
 								{!! Form::submit('Spara', ['class' => 'btn orange']) !!}

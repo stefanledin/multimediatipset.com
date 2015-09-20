@@ -3,7 +3,8 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Multimediatipset.com™</title>
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/css/materialize.min.css">
+		<link rel="stylesheet" href="/css/all.css">
+		<link async href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	</head>
 	<body>
 		<nav>
@@ -23,7 +24,6 @@
 		@section('content')
 		@show
 
-		<script src="//code.jquery.com/jquery-latest.min.js"></script>
-		<script src="//cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/js/materialize.min.js"></script>
+		<script type="text/javascript" src="/js/all.js"></script>
 	</body>
 </html>

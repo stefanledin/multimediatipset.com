@@ -20,7 +20,10 @@ class User extends Model implements AuthenticatableContract {
 	 *
 	 * @var array
 	 */
-	protected $fillable = ['uid', 'username', 'first_name', 'last_name', 'is_admin'];
+	protected $fillable = [
+		'uid', 'username', 'first_name', 'last_name',
+		'profile_picture', 'profile_picture_thumbnail', 'is_admin'
+	];
 
     /**
      * The user has many predictions

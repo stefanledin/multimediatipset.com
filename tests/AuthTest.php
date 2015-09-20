@@ -18,6 +18,8 @@ class AuthTest extends TestCase {
         $socialLogin->shouldReceive('handleCallback')->once()->andReturn((object) [
             'id' => '12345',
             'name' => 'Stefan Ledin',
+            'avatar' => 'http://lorempixel.com/100/100/',
+            'avatar_original' => 'http://lorempixel.com/557/557/',
             'user' => array(
                 'first_name' => 'Stefan',
                 'last_name' => 'Ledin'
@@ -42,6 +44,8 @@ class AuthTest extends TestCase {
         $socialLogin->shouldReceive('handleCallback')->once()->andReturn((object)[
             'id' => '00000',
             'name' => 'John Doe',
+            'avatar' => 'http://lorempixel.com/100/100/',
+            'avatar_original' => 'http://lorempixel.com/557/557/',
             'user' => array(
                 'first_name' => 'John',
                 'last_name' => 'Doe'
@@ -56,7 +60,9 @@ class AuthTest extends TestCase {
         $this->visit('/login/redirect');
 
         $this->seeInDatabase('users', [
-            'uid' => '00000'
+            'uid' => '00000',
+            'profile_picture' => 'http://lorempixel.com/557/557/',
+            'profile_picture_thumbnail' => 'http://lorempixel.com/100/100/'
         ]);
 
         $this->assertTrue(Auth::check());

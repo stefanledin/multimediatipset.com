@@ -9,13 +9,22 @@
 						<a href="{{ route('home') }}" class="btn grey darken-2"><i class="mdi-hardware-keyboard-arrow-left left"></i>Tillbaka</a>
 					</div>
 					<span class="card-title">{{ $game->name }}</span>
-					@if($game->predictions)
+					@if(count($game->predictions) != 0)
 					<ul class="collection">
 						@foreach($game->predictions as $prediction)
-							<li class="collection-item">{{ $prediction->prediction }}</li>
+							<li class="collection-item avatar">
+								<img src="{{ $prediction->user->profile_picture_thumbnail }}" class="circle">
+								<span class="title">{{ $prediction->user->username }} har tippat:</span>
+								<ol>
+									@foreach(unserialize($prediction->prediction) as $prediction)
+										<li>{{ $prediction }}</li>
+									@endforeach
+								</ol>
+							</li>
 						@endforeach
 					</ul>
 					@endif
+					@if(Auth::check() && Auth::user()->is_admin)
 					<div class="row">
 						<a href="{{ route('games.edit', $game->id) }}" class="btn green col s6">Redigera</a>
 						<form action="{{ route('games.destroy', $game->id) }}" method="post">
@@ -24,17 +33,24 @@
 							<input type="submit" class="btn red darken-2 col s6" value="Radera">
 						</form>
 					</div>
+					@endif
+					@if($game->status == 'open')
 					<div class="row">
 						{!! Form::open(['route' => 'predictions.store', 'class' => 'col s12 white']) !!}
 							{!! Form::hidden('game_id', $game->id) !!}
-							<div class="input-field col s8">
-								{!! Form::text('prediction', null, ['placeholder' => 'Resultat']) !!}
-							</div>
+							@if($game->game_data)
+								<ol class="sortable">
+								@foreach(unserialize($game->game_data) as $team)
+									<li><input type="hidden" name="game-data[]" value="{{ $team }}">{{ $team }}</li>
+								@endforeach
+								</ol>
+							@endif
 							<div class="input-field col s4">
 								{!! Form::submit('Tippa', ['class' => 'btn orange']) !!}
 							</div>
 						{!! Form::close() !!}
 					</div>
+					@endif
 				</div>
 			</div>
 		</div>

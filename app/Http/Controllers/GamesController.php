@@ -11,10 +11,11 @@ use Illuminate\Http\Request;
 class GamesController extends Controller {
 
 	protected $gameStatuses = ['open' => 'Öppen', 'closed' => 'Stängd', 'finished' => 'Avslutad'];
+	protected $gameTypes = ['Tabellplaceringar', '1-X-2', 'Resultat'];
 
 	public function __construct()
 	{
-		$this->middleware('auth', ['except' => 'index']);
+		$this->middleware('auth', ['only' => ['create', 'edit', 'destroy']]);
 	}
 
 	/**
@@ -48,6 +49,8 @@ class GamesController extends Controller {
 		$game = Game::create([
             'name' => $request->input('name'),
             'price' => $request->input('price'),
+            'game_type' => $request->input('game-type'),
+            'game_data' => serialize($request->input('game-data')),
             'status' => $request->input('status')
         ]);
         if ($game) {
@@ -64,6 +67,7 @@ class GamesController extends Controller {
 	public function show($id)
 	{
 		$game = Game::find($id);
+		$game->load('predictions.user');
 		return view('games.single', ['game' => $game]);
 	}
 
@@ -75,8 +79,10 @@ class GamesController extends Controller {
 	 */
 	public function edit($id)
 	{
+		$game = Game::find($id);
+		$game->load('predictions.user');
 		return view('games.edit', [
-			'game' => Game::find($id),
+			'game' => $game,
 			'statuses' => $this->gameStatuses
 		]);
 	}
@@ -93,6 +99,11 @@ class GamesController extends Controller {
 		$game->name = $request->input('name');
 		$game->price = $request->input('price');
 		$game->status = $request->input('status');
+		$game->game_type = $request->input('game-type');
+		$game->game_data = serialize($request->input('game-data'));
+		if ($request->has('winner')) {
+			$game->winner = $request->input('winner');
+		}
 		$game->save();
 		return redirect()->route('games.show', $game->id);
 	}

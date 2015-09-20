@@ -10,12 +10,20 @@ use Illuminate\Http\Request;
 
 class PredictionsController extends Controller {
 
+	public function __construct()
+	{
+		#$this->middleware('auth');
+	}
+
 	public function store(Request $request)
 	{
 		$game = Game::find($request->input('game_id'));
-		$prediction = new Prediction;
-		$prediction->prediction = $request->input('prediction');
+		$prediction = new Prediction([
+			'prediction' => serialize($request->input('game-data'))
+		]);
 		$game->predictions()->save($prediction);
+		$user = \Auth::user();
+		$user->predictions()->save($prediction);
 		return redirect()->back();
 	}
 
