@@ -26,33 +26,35 @@
 						@endforeach
 					</ul>
 					@endif
-					@if(Auth::check() && Auth::user()->is_admin)
-					<div class="row">
-						<a href="{{ route('games.edit', $game->id) }}" class="btn green col s6">Redigera</a>
-						<form action="{{ route('games.destroy', $game->id) }}" method="post">
-							<input type="hidden" name="_method" value="DELETE">
-							<input type="hidden" name="_token" value="{{ csrf_token() }}">
-							<input type="submit" class="btn red darken-2 col s6" value="Radera">
-						</form>
-					</div>
-					@endif
-					@if($game->status == 'open')
-					<div class="row">
-						{!! Form::open(['route' => 'predictions.store', 'class' => 'col s12 white']) !!}
-							<p>Dra och släpp lagen i den ordning du tror de slutar i tabellen:</p>
-							{!! Form::hidden('game_id', $game->id) !!}
-							@if($game->game_data)
-								<ol class="sortable">
-								@foreach(unserialize($game->game_data) as $team)
-									<li><input type="hidden" name="game-data[]" value="{{ $team }}">{{ $team }}</li>
-								@endforeach
-								</ol>
-							@endif
-							<div class="input-field col s4">
-								{!! Form::submit('Tippa', ['class' => 'btn orange']) !!}
-							</div>
-						{!! Form::close() !!}
-					</div>
+					@if(Auth::check())
+						@if(Auth::user()->is_admin)
+						<div class="row">
+							<a href="{{ route('games.edit', $game->id) }}" class="btn green col s6">Redigera</a>
+							<form action="{{ route('games.destroy', $game->id) }}" method="post">
+								<input type="hidden" name="_method" value="DELETE">
+								<input type="hidden" name="_token" value="{{ csrf_token() }}">
+								<input type="submit" class="btn red darken-2 col s6" value="Radera">
+							</form>
+						</div>
+						@endif
+						@if($game->status == 'open')
+						<div class="row">
+							{!! Form::open(['route' => 'predictions.store', 'class' => 'col s12 white']) !!}
+								<p>Dra och släpp lagen i den ordning du tror de slutar i tabellen:</p>
+								{!! Form::hidden('game_id', $game->id) !!}
+								@if($game->game_data)
+									<ol class="sortable">
+									@foreach(unserialize($game->game_data) as $team)
+										<li><input type="hidden" name="game-data[]" value="{{ $team }}">{{ $team }}</li>
+									@endforeach
+									</ol>
+								@endif
+								<div class="input-field col s4">
+									{!! Form::submit('Tippa', ['class' => 'btn orange']) !!}
+								</div>
+							{!! Form::close() !!}
+						</div>
+						@endif
 					@endif
 				</div>
 			</div>
