@@ -15,7 +15,7 @@ class CreatePredictionsTable extends Migration {
 		Schema::create('predictions', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('prediction');
+			$table->text('prediction');
 			$table->timestamps();
 		});
 	}
