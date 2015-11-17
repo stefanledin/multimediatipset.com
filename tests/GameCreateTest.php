@@ -47,10 +47,10 @@ class GameCreateTest extends TestCase {
     	$this->visit('games/'.$game->id)
     		->click('Redigera')
     		->seePageIs('games/'.$game->id.'/edit')
-    		->select($user->id, 'winner')
+    		->select($prediction->id, 'winner')
     		->press('Spara');
 
-		$this->assertEquals($user->id, App\Game::find($game->id)->winner);
+		$this->assertEquals($prediction->id, App\Game::find($game->id)->winner);
 	}
 
 	public function test_user_can_add_prediction()

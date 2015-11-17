@@ -18,9 +18,12 @@ class PredictionsController extends Controller {
 	public function store(Request $request)
 	{
 		$game = Game::find($request->input('game_id'));
-		$prediction = new Prediction([
-			'prediction' => serialize($request->input('game-data'))
-		]);
+		$prediction = new Prediction();
+		if ($request->has('game-data')) {
+			$prediction->prediction = serialize($request->input('game-data'));
+		} else {
+			$prediction->prediction = $request->input('score');
+		}
 		$game->predictions()->save($prediction);
 		$user = \Auth::user();
 		$user->predictions()->save($prediction);

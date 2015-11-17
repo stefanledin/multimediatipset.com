@@ -17,11 +17,18 @@
 							<li class="collection-item avatar">
 								<img src="{{ $prediction->user->profile_picture_thumbnail }}" class="circle">
 								<span class="title">{{ $prediction->user->username }} har tippat:</span>
-								<ol>
-									@foreach(unserialize($prediction->prediction) as $prediction)
-										<li>{{ $prediction }}</li>
-									@endforeach
-								</ol>
+								@if($game->game_type == 'LeagueTable')
+									<ol>
+										@foreach(unserialize($prediction->prediction) as $prediction)
+											<li>{{ $prediction }}</li>
+										@endforeach
+									</ol>
+								@else
+									<strong>{{ $prediction->prediction }}</strong>
+									@if($game->winner && $game->winner == $prediction->id)
+										<span class="secondary-content"><i class="material-icons">grade</i></span>
+									@endif
+								@endif
 							</li>
 						@endforeach
 					</ul>
@@ -38,22 +45,17 @@
 						</div>
 						@endif
 						@if($game->status == 'open')
-						<div class="row">
+							<div class="row">
 							{!! Form::open(['route' => 'predictions.store', 'class' => 'col s12 white']) !!}
-								<p>Dra och släpp lagen i den ordning du tror de slutar i tabellen:</p>
 								{!! Form::hidden('game_id', $game->id) !!}
-								@if($game->game_data)
-									<ol class="sortable">
-									@foreach(unserialize($game->game_data) as $team)
-										<li><input type="hidden" name="game-data[]" value="{{ $team }}">{{ $team }}</li>
-									@endforeach
-									</ol>
-								@endif
+
+								@include('games.types.'.$game->game_type)
+								
 								<div class="input-field col s4">
 									{!! Form::submit('Tippa', ['class' => 'btn orange']) !!}
 								</div>
 							{!! Form::close() !!}
-						</div>
+							</div>
 						@endif
 					@endif
 				</div>
