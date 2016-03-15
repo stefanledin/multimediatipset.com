@@ -23,6 +23,12 @@
 											<li>{{ $prediction }}</li>
 										@endforeach
 									</ol>
+								@elseif($game->game_type == 'Series')
+                                    <ul>
+                                        @foreach(unserialize($prediction->prediction) as $teams => $result)
+                                        <li><strong>{{ $teams }}:</strong> {{ $result }}</li>
+                                        @endforeach
+                                    </ul>
 								@else
 									<strong>{{ $prediction->prediction }}</strong>
 									@if($game->winner && $game->winner == $prediction->id)

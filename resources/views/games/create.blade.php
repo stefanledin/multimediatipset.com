@@ -24,6 +24,7 @@
                                     <option value="LeagueTable">Tabellplaceringar</option>
                                     <option value="Result">1-X-2</option>
                                     <option value="Score">Mål/poäng</option>
+                                    <option value="Series">Matchserier</option>
                                 </select>
                             </div>
                             <div class="input-field col s12">
