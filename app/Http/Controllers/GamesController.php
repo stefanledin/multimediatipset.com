@@ -25,8 +25,12 @@ class GamesController extends Controller {
 	 */
 	public function index()
 	{
-		$active_games = Game::all();
-		return view('games.index', ['active_games' => $active_games]);
+        $active_games = Game::where('status', '!=', 'finished');
+        $finished_games = Game::where('status', 'finished');
+        return view('games.index', [
+            'active_games' => $active_games,
+            'finished_games' => $finished_games
+        ]);
 	}
 
 	/**
