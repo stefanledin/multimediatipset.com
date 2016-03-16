@@ -63,6 +63,8 @@
 							{!! Form::close() !!}
 							</div>
 						@endif
+                    @else
+                        <p><a href="/login" class="btn green">Logga in för att lämna ditt tips</a></p>
 					@endif
 				</div>
 			</div>
