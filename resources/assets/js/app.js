@@ -9,11 +9,12 @@
 					el: '#create-game',
 					data: {
 						teams: [],
+						matches: [],
 						newTeam: ''
 					},
 					methods: {
 						changeGameType: function (e) {
-							console.log(e.currentTarget);
+							this.gameType = e.currentTarget.value;
 						},
 						addTeam: function (event) {
 							event.preventDefault();

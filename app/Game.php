@@ -20,4 +20,14 @@ class Game extends Model {
 		return 0;
 	}
 
+	public function getGameDataAttribute($game_data)
+	{
+		return unserialize($game_data);
+	}
+
+	public function setGameDataAttribute($game_data)
+	{
+		$this['game_data'] = serialize($game_data);
+	}
+
 }

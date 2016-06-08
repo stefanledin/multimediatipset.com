@@ -18,8 +18,8 @@
 					</div>
 					@else
 					<span class="card-title">Inga pågående tips</span>
-					<br>
 					@endif
+					<br>
 					
 					@if(count($finished_games))
 					<span class="card-title">Avslutade tips</span>

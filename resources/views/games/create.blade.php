@@ -19,15 +19,35 @@
                                 <input type="number" placeholder="Pris" id="price" name="price">
                             </div>
                             <div class="input-field col s12">
-                                <select v-on="change: changeGameType" name="game-type" class="browser-default">
+                                <select v-model="gameType" v-on="change: changeGameType" name="game-type" class="browser-default">
                                     <option disabled selected>Typ av tips</option>
                                     <option value="LeagueTable">Tabellplaceringar</option>
-                                    <option value="Result">1-X-2</option>
+                                    <option value="Results">1-X-2</option>
                                     <option value="Score">Mål/poäng</option>
                                     <option value="Series">Matchserier</option>
                                 </select>
                             </div>
-                            <div class="input-field col s12">
+                            
+                            <div v-if="gameType === 'Results'" class="input-field col s12">
+                                <table class="bordered striped responsive-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Lag</th>
+                                            <th>&nbsp;</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-repeat="teams">
+                                            <td><input type="text" name="game-data[]" value="@{{$value}}"></td>
+                                            <td><button v-on="click: removeTeam($index, $event)" class="waves-effect btn right">Radera <i class="material-icons small">delete</i></button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <input v-model="newTeam" type="text" placeholder="Lägg till match">
+                                <button class="btn" v-on="click: addTeam">Lägg till</button>
+                            </div>
+                            
+                            <div v-if="gameType === 'LeagueTable'" class="input-field col s12">
                             	<table class="bordered striped responsive-table">
                             		<thead>
                             			<tr>
