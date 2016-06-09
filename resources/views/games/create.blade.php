@@ -28,18 +28,35 @@
                                 </select>
                             </div>
                             
-                            <div v-if="gameType === 'Results'" class="input-field col s12">
+                            <div class="input-field col s12">
                                 <table class="bordered striped responsive-table">
                                     <thead>
                                         <tr>
-                                            <th>Lag</th>
+                                            <th>Match</th>
+                                            <th>1</th>
+                                            <th>X</th>
+                                            <th>2</th>
                                             <th>&nbsp;</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr v-repeat="teams">
-                                            <td><input type="text" name="game-data[]" value="@{{$value}}"></td>
-                                            <td><button v-on="click: removeTeam($index, $event)" class="waves-effect btn right">Radera <i class="material-icons small">delete</i></button></td>
+                                            <td>
+                                                <input type="text" name="game-data[matches][@{{$index}}][match]" value="@{{$value}}">
+                                            </td>
+                                            <td>
+                                                <input type="radio" name="game-data[matches][@{{$index}}][alternatives][1]">
+                                                <label for=""></label>
+                                            </td>
+                                            <td>
+                                                <input type="radio" name="game-data[matches][@{{$index}}][alternatives][X]">
+                                                <label for=""></label>
+                                            </td>
+                                            <td>
+                                                <input type="radio" name="game-data[matches][@{{$index}}][alternatives][2]">
+                                                <label for=""></label>
+                                            </td>
+                                            <td><button v-on="click: removeTeam($index, $event)" class="waves-effect btn right"><i class="material-icons small">delete</i></button></td>
                                         </tr>
                                     </tbody>
                                 </table>

@@ -20,7 +20,7 @@ class PredictionsController extends Controller {
 		$game = Game::find($request->input('game_id'));
 		$prediction = new Prediction();
 		if ($request->has('game-data')) {
-			$prediction->prediction = serialize($request->input('game-data'));
+			$prediction->prediction = $request->input('game-data');
 		} else {
 			$prediction->prediction = $request->input('score');
 		}

@@ -54,7 +54,7 @@ class GamesController extends Controller {
             'name' => $request->input('name'),
             'price' => $request->input('price'),
             'game_type' => $request->input('game-type'),
-            'game_data' => serialize($request->input('game-data')),
+            'game_data' => $request->input('game-data'),
             'status' => $request->input('status')
         ]);
         if ($game) {
@@ -105,7 +105,7 @@ class GamesController extends Controller {
 		$game->status = $request->input('status');
 		$game->game_type = $request->input('game-type');
 		if ($request->has('game-data')) {
-			$game->game_data = serialize($request->input('game-data'));
+			$game->game_data = $request->input('game-data');
 		}
 		if ($request->has('winner')) {
 			$game->winner = $request->input('winner');
