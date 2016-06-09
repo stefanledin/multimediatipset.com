@@ -31,8 +31,6 @@ class RegisterUser extends Command implements SelfHandling {
 		$user = User::create([
     		'uid' => $this->userData->id,
     		'username' => $this->userData->name,
-    		'first_name' => $this->userData->user['first_name'],
-    		'last_name' => $this->userData->user['last_name'],
     		'profile_picture' => $this->userData->avatar_original,
     		'profile_picture_thumbnail' => $this->userData->avatar,
     		'is_admin' => 0
