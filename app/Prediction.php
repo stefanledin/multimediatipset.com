@@ -4,12 +4,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Prediction extends Model {
 
-    /*
-    $_POST['prediction'] = array(
-
-    );
-     */
-
 	protected $fillable = ['prediction', 'user_id', 'game_id'];
 
 	public function game()

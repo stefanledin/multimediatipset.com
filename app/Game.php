@@ -4,18 +4,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Game extends Model {
 
-	/*
-	$_POST['game_data'] = array(
-		'matches' => array(
-			'Sverige - Italien' => array(
-				'worth' => 5,
-				'alternatives' => array('1', 'X', '2')
-				'correct' => 'X'
-			)
-		)
-	);
-	 */
-
 	protected $fillable = ['name', 'price', 'status', 'game_type', 'game_data', 'winner'];
 
 	public function predictions()

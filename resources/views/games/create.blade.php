@@ -33,9 +33,8 @@
                                     <thead>
                                         <tr>
                                             <th>Match</th>
-                                            <th>1</th>
-                                            <th>X</th>
-                                            <th>2</th>
+                                            <th>Värde</th>
+                                            <th>Highlight</th>
                                             <th>&nbsp;</th>
                                         </tr>
                                     </thead>
@@ -45,18 +44,17 @@
                                                 <input type="text" name="game-data[matches][@{{$index}}][match]" value="@{{$value}}">
                                             </td>
                                             <td>
-                                                <input type="radio" name="game-data[matches][@{{$index}}][alternatives][1]">
-                                                <label for=""></label>
+                                                <input type="number" value="1" name="game-data[matches][@{{$index}}][worth]" placeholder="Värde">
                                             </td>
                                             <td>
-                                                <input type="radio" name="game-data[matches][@{{$index}}][alternatives][X]">
-                                                <label for=""></label>
+                                                <input type="checkbox" id="match-@{{$index}}-highlighted" name="game-data[matches][@{{$index}}][highlighted]">
+                                                <label for="match-@{{$index}}-highlighted">Highlight</label>
                                             </td>
                                             <td>
-                                                <input type="radio" name="game-data[matches][@{{$index}}][alternatives][2]">
-                                                <label for=""></label>
+                                                <button v-on="click: removeTeam($index, $event)" class="waves-effect btn right">
+                                                    <i class="material-icons small">delete</i>
+                                                </button>
                                             </td>
-                                            <td><button v-on="click: removeTeam($index, $event)" class="waves-effect btn right"><i class="material-icons small">delete</i></button></td>
                                         </tr>
                                     </tbody>
                                 </table>

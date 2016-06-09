@@ -1,15 +1,38 @@
 @if($game->game_data)
-    @foreach($game->game_data as $data)
-        <div class="input-field col s12">
-            {{ $data }}
-            <input type="radio" id="{{ $data }}_1" name="game-data[{{ $data }}_1]" value="1">
-            <label for="{{ $data }}_1">1</label>
-            
-            <input type="radio" id="{{ $data }}_X" name="game-data[{{ $data }}_X]" value="X">
-            <label for="{{ $data }}_X">X</label>
-            
-            <input type="radio" id="{{ $data }}_2" name="game-data[{{ $data }}_2]" value="2">
-            <label for="{{ $data }}_2">2</label>
-        </div>
-    @endforeach
+    <div class="input-field col s12">
+        <table>
+            <thead>
+                <tr>
+                    <th>Match</th>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                    <th>Rätt svar</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for($i = 0; $i < count($game->game_data['matches']); $i++)
+                    <tr @if(isset($game->game_data['matches'][$i]['highlighted'])) class="blue lighten-5" @endif>
+                        <td>
+                            {{ $game->game_data['matches'][$i]['match'] }}
+                            <input type="hidden" name="game-data[matches][{{ $i }}][match]" value="{{ $game->game_data['matches'][$i]['match'] }}">
+                        </td>
+                        <td>
+                            <input type="radio" value="1" id="match-{{ $i }}-1" name="game-data[matches][{{ $i }}][result]">
+                            <label for="match-{{ $i }}-1">1</label>
+                        </td>
+                        <td>
+                            <input type="radio" value="X" id="match-{{ $i }}-X" name="game-data[matches][{{ $i }}][result]">
+                            <label for="match-{{ $i }}-X">X</label>
+                        </td>
+                        <td>
+                            <input type="radio" value="2" id="match-{{ $i }}-2" name="game-data[matches][{{ $i }}][result]">
+                            <label for="match-{{ $i }}-2">2</label>
+                        </td>
+                        <td>{{ $game->game_data['matches'][$i]['worth'] }} poäng</td>
+                    </tr>
+                @endfor
+            </tbody>
+        </table>            
+    </div>
 @endif

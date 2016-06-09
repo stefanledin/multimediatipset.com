@@ -40,26 +40,26 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach($prediction->prediction as $match => $result)
-                                            <tr>
-                                                <td>{{ $match }}</td>
-                                                <td>
-                                                    @if($result == '1')
-                                                        {{ $result }}
-                                                    @endif
-                                                </td>
-                                                <td>
-                                                    @if($result == 'X')
-                                                        {{ $result }}
-                                                    @endif
-                                                </td>
-                                                <td>
-                                                    @if($result == '2')
-                                                        {{ $result }}
-                                                    @endif
-                                                </td>
-                                            </tr>                                             
-                                            @endforeach
+                                            @for($i = 0; $i < count($prediction->prediction['matches']); $i++)
+                                                <tr>
+                                                    <td>{{ $prediction->prediction['matches'][$i]['match'] }}</td>
+                                                    <td>
+                                                    @if($prediction->prediction['matches'][$i]['result'] == '1')
+                                                        {{ $prediction->prediction['matches'][$i]['result'] }}
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                    @if($prediction->prediction['matches'][$i]['result'] == 'X')
+                                                        {{ $prediction->prediction['matches'][$i]['result'] }}
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                    @if($prediction->prediction['matches'][$i]['result'] == '2')
+                                                        {{ $prediction->prediction['matches'][$i]['result'] }}
+                                                        @endif
+                                                    </td>
+                                                </tr>
+                                            @endfor
                                         </tbody>
                                     </table>
                                 @else
