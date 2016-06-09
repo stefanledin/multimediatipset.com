@@ -104,8 +104,8 @@ class GamesController extends Controller {
 		$game->price = $request->input('price');
 		$game->status = $request->input('status');
 		$game->game_type = $request->input('game-type');
-		if ($request->has('game-data')) {
-			$game->game_data = $request->input('game-data');
+		if ($request->has('game_data')) {
+			$game->game_data = $request->input('game_data');
 		}
 		if ($request->has('winner')) {
 			$game->winner = $request->input('winner');

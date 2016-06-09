@@ -26,6 +26,33 @@
 										<li>{!! Form::text('game-data[]', $team) !!}</li>
 									@endforeach
 									</ol>
+								@elseif($game->game_type == 'Results')
+									<table>
+										<tbody>
+										@for($i = 0; $i < count($game->game_data['matches']); $i++)
+											<?php var_dump($game->game_data['matches'][$i]); ?>
+											<tr>
+												<td>{{ $game->game_data['matches'][$i]['match'] }}</td>
+												<td>
+													<input type="radio" id="matches-{{$i}}-0" name="game_data['matches'][{{$i}}]['correct']" value="0">
+													<label for="matches-{{$i}}-0">Inget</label>
+												</td>
+												<td>
+													<input type="radio" id="matches-{{$i}}-1" name="game_data['matches'][{{$i}}]['correct']" value="1">
+													<label for="matches-{{$i}}-1">1</label>
+												</td>
+												<td>
+													<input type="radio" id="matches-{{$i}}-X" name="game_data['matches'][{{$i}}]['correct']" value="X">
+													<label for="matches-{{$i}}-X">X</label>
+												</td>
+												<td>
+													<input type="radio" id="matches-{{$i}}-2" name="game_data['matches'][{{$i}}]['correct']" value="2">
+													<label for="matches-{{$i}}-2">2</label>
+												</td>
+											</tr>
+										@endfor
+										</tbody>
+									</table>
 								@endif
                             </div>
                             <div class="input-field col s12">
