@@ -73,7 +73,7 @@ class GamesController extends Controller {
 		$game = Game::find($id);
 		$game->load('predictions.user');
 		// Loopa igenom varje tips
-		$game->predictions->map(function ($prediction) use ($game)
+		/*$game->predictions->map(function ($prediction) use ($game)
 		{
 			// Loopa igenom varje match och rätta tipset
 			collect($game->game_data['matches'])->each(function ($match, $index) use ($prediction)
@@ -91,7 +91,7 @@ class GamesController extends Controller {
 		{
 			var_dump($prediction->score);
 		});
-		die();
+		die();*/
 		return view('games.single', ['game' => $game]);
 	}
 
