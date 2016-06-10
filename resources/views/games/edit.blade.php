@@ -32,21 +32,32 @@
 										@for($i = 0; $i < count($game->game_data['matches']); $i++)
 											<?php var_dump($game->game_data['matches'][$i]); ?>
 											<tr>
-												<td>{{ $game->game_data['matches'][$i]['match'] }}</td>
 												<td>
-													<input type="radio" id="matches-{{$i}}-0" name="game_data['matches'][{{$i}}]['correct']" value="0">
+													<input type="text" name="game_data[matches][{{$i}}][match]" value="{{ $game->game_data['matches'][$i]['match'] }}">
+													<input type="hidden" name="game_data[matches][{{$i}}][worth]" value="{{ $game->game_data['matches'][$i]['worth']}}">
+													@if(isset($game->game_data['matches'][$i]['highlighted']))
+														<input type="hidden" name="game_data[matches][{{$i}}][highlighted]" value="{{ $game->game_data['matches'][$i]['highlighted'] }}">
+													@endif
+												</td>
+												@foreach(array('0' => 'Inget','1' => '1','X' => 'X','2' => '2') as $result => $label)
+													<?php
+													$value = isset($game->game_data['matches'][$i]['correct']);
+													?>
+												@endforeach
+												<td>
+													<input type="radio" id="matches-{{$i}}-0" name="game_data[matches][{{$i}}][correct]" value="0">
 													<label for="matches-{{$i}}-0">Inget</label>
 												</td>
 												<td>
-													<input type="radio" id="matches-{{$i}}-1" name="game_data['matches'][{{$i}}]['correct']" value="1">
+													<input type="radio" id="matches-{{$i}}-1" name="game_data[matches][{{$i}}][correct]" value="1">
 													<label for="matches-{{$i}}-1">1</label>
 												</td>
 												<td>
-													<input type="radio" id="matches-{{$i}}-X" name="game_data['matches'][{{$i}}]['correct']" value="X">
+													<input type="radio" id="matches-{{$i}}-X" name="game_data[matches][{{$i}}][correct]" value="X">
 													<label for="matches-{{$i}}-X">X</label>
 												</td>
 												<td>
-													<input type="radio" id="matches-{{$i}}-2" name="game_data['matches'][{{$i}}]['correct']" value="2">
+													<input type="radio" id="matches-{{$i}}-2" name="game_data[matches][{{$i}}][correct]" value="2">
 													<label for="matches-{{$i}}-2">2</label>
 												</td>
 											</tr>
