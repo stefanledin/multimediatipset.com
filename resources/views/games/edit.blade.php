@@ -41,25 +41,16 @@
 												</td>
 												@foreach(array('0' => 'Inget','1' => '1','X' => 'X','2' => '2') as $result => $label)
 													<?php
-													$value = isset($game->game_data['matches'][$i]['correct']);
+													$value = '0';
+													if (isset($game->game_data['matches'][$i]['correct'])) {
+														$value = $game->game_data['matches'][$i]['correct'];
+													}
 													?>
+													<td>
+														<input type="radio" @if($value == $result) checked="checked" @endif id="matches-{{$i}}-{{$result}}" name="game_data[matches][{{$i}}][correct]" value="{{$result}}">
+														<label for="matches-{{$i}}-{{$result}}">{{ $label }}</label>
+													</td>
 												@endforeach
-												<td>
-													<input type="radio" id="matches-{{$i}}-0" name="game_data[matches][{{$i}}][correct]" value="0">
-													<label for="matches-{{$i}}-0">Inget</label>
-												</td>
-												<td>
-													<input type="radio" id="matches-{{$i}}-1" name="game_data[matches][{{$i}}][correct]" value="1">
-													<label for="matches-{{$i}}-1">1</label>
-												</td>
-												<td>
-													<input type="radio" id="matches-{{$i}}-X" name="game_data[matches][{{$i}}][correct]" value="X">
-													<label for="matches-{{$i}}-X">X</label>
-												</td>
-												<td>
-													<input type="radio" id="matches-{{$i}}-2" name="game_data[matches][{{$i}}][correct]" value="2">
-													<label for="matches-{{$i}}-2">2</label>
-												</td>
 											</tr>
 										@endfor
 										</tbody>
