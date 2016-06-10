@@ -41,6 +41,7 @@
                                         </thead>
                                         <tbody>
                                             @for($i = 0; $i < count($prediction->prediction['matches']); $i++)
+                                                @if($prediction->prediction['matches'][$i]['result'])
                                                 <tr>
                                                     <td>{{ $prediction->prediction['matches'][$i]['match'] }}</td>
                                                     <td>
@@ -59,6 +60,7 @@
                                                         @endif
                                                     </td>
                                                 </tr>
+                                                @endif
                                             @endfor
                                         </tbody>
                                     </table>
