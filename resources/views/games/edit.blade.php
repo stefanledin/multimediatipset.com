@@ -30,7 +30,6 @@
 									<table>
 										<tbody>
 										@for($i = 0; $i < count($game->game_data['matches']); $i++)
-											<?php var_dump($game->game_data['matches'][$i]); ?>
 											<tr>
 												<td>
 													<input type="text" name="game_data[matches][{{$i}}][match]" value="{{ $game->game_data['matches'][$i]['match'] }}">
