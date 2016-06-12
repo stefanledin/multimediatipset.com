@@ -73,7 +73,7 @@ class GamesController extends Controller {
 		$game = Game::find($id);
 		$game->load('predictions.user');
 		// Loopa igenom varje tips
-		/*$game->predictions->map(function ($prediction) use ($game)
+		$leaderboard = $game->predictions->map(function ($prediction) use ($game)
 		{
 			// Loopa igenom varje match och rätta tipset
 			collect($game->game_data['matches'])->each(function ($match, $index) use ($prediction)
@@ -81,18 +81,17 @@ class GamesController extends Controller {
 				$points = $match['worth'];
 				$correctResult = $match['correct'];
 				$predictedResult = $prediction->prediction['matches'][$index]['result'];
+				
 				if ($predictedResult == $correctResult) {
 					$prediction->score += (int) $points;
 				}
 				$prediction->score += 0;
 			});
-		});
-		$game->predictions->each(function ($prediction)
-		{
-			var_dump($prediction->score);
-		});
-		die();*/
-		return view('games.single', ['game' => $game]);
+			return $prediction;
+		})
+		->sortBy('score')
+		->reverse();
+		return view('games.single', compact('game', 'leaderboard'));
 	}
 
 	/**

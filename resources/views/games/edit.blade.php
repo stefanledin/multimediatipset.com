@@ -72,6 +72,8 @@
 													<li>{{ $team }}</li>
 												@endforeach
 											</ol>
+											@elseif($game->game_type == 'Results')
+											
 											@else
 												<strong>{{ $prediction->prediction }}</strong>
 											@endif

@@ -11,6 +11,24 @@
                     <span class="card-title">{{ $game->name }}</span>
                     <p>Pris: {{ $game->price }} kr.</p>
                     <p>I potten: {{ $game->inPot() }} kr</p>
+                    
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Namn</th>
+                                <th>Antal rätt</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($leaderboard as $participant)
+                                <tr>
+                                    <td>{{$participant->user->username}}</td>
+                                    <td>{{ $participant->score }} / {{ count($game->game_data['matches']) }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                    
                     @if(count($game->predictions) != 0)
                     <ul class="collection">
                         @foreach($game->predictions as $prediction)
