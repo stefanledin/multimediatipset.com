@@ -91,7 +91,10 @@ class GamesController extends Controller {
 		})
 		->sortBy('score')
 		->reverse();
-		return view('games.single', compact('game', 'leaderboard'));
+		$finished_matches = collect($game->game_data['matches'])->filter(function($match) {
+			return $match['correct'] != '0';
+		});
+		return view('games.single', compact('game', 'leaderboard', 'finished_matches'));
 	}
 
 	/**

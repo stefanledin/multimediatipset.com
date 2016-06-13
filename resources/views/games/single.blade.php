@@ -23,7 +23,7 @@
                             @foreach($leaderboard as $participant)
                                 <tr>
                                     <td>{{$participant->user->username}}</td>
-                                    <td>{{ $participant->score }} / {{ count($game->game_data['matches']) }}</td>
+                                    <td>{{ $participant->score }} / {{ count($finished_matches) }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
