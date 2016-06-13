@@ -83,8 +83,10 @@ class GamesController extends Controller {
 				$predictedResult = $prediction->prediction['matches'][$index]['result'];
 				
 				if ($predictedResult == $correctResult) {
+					$prediction->correctAnswers += 1;
 					$prediction->score += (int) $points;
 				}
+				$prediction->correctAnswers += 0;
 				$prediction->score += 0;
 			});
 			return $prediction;
@@ -94,7 +96,13 @@ class GamesController extends Controller {
 		$finished_matches = collect($game->game_data['matches'])->filter(function($match) {
 			return $match['correct'] != '0';
 		});
-		return view('games.single', compact('game', 'leaderboard', 'finished_matches'));
+		$maxNumberOfPoints = collect($game->game_data['matches'])->map(function($match){
+			if ($match['correct'] != '0') {
+				return (int) $match['worth'];
+			}
+			return 0;
+		})->sum();
+		return view('games.single', compact('game', 'leaderboard', 'finished_matches', 'maxNumberOfPoints'));
 	}
 
 	/**

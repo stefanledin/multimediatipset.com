@@ -17,13 +17,15 @@
                             <tr>
                                 <th>Namn</th>
                                 <th>Antal rätt</th>
+                                <th>Antal poäng</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($leaderboard as $participant)
                                 <tr>
                                     <td>{{$participant->user->username}}</td>
-                                    <td>{{ $participant->score }} / {{ count($finished_matches) }}</td>
+                                    <td>{{ $participant->correctAnswers }} / {{ count($finished_matches) }}</td>
+                                    <td>{{ $participant->score }} / {{ $maxNumberOfPoints }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
