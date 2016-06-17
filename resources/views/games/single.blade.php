@@ -62,7 +62,7 @@
                                         <tbody>
                                             @for($i = 0; $i < count($prediction->prediction['matches']); $i++)
                                                 @if(isset($prediction->prediction['matches'][$i]['result']))
-                                                <tr>
+                                                <tr @if($game->game_data['matches'][$i]['correct'] != '0') class="@if($game->game_data['matches'][$i]['correct'] == $prediction->prediction['matches'][$i]['result']) green lighten-3 @else red lighten-3 @endif"@endif>
                                                     <td>{{ $prediction->prediction['matches'][$i]['match'] }}</td>
                                                     <td>
                                                     @if($prediction->prediction['matches'][$i]['result'] == '1')
