@@ -1,6 +1,8 @@
 <?php
 
-# Alternativ
+/**
+ * Alternativ
+ */
 # En match
 $game->data = [
     'match' => 'Sverige - Belgien',
@@ -8,12 +10,20 @@ $game->data = [
     'worth' => 5,
     'correct' => 0
 ];
+$prediction->data = [
+    'match' => 'Sverige - Belgien',
+    'answer' => '1'
+];
+
 $game->data = [
     'question' => 'Vinner Sverige mot Belgien?',
     'alternatives' => ['Ja', 'Nej'],
     'worth' => 5
 ];  
-# Alternativ
+$prediction->data = [
+    'answer' => 'Ja'
+];
+
 # Flera matcher
 $game->data = [
     [
@@ -29,14 +39,32 @@ $game->data = [
         'correct' => 0
     ]
 ];
+$prediction->data = [
+    [
+        'match' => 'Sverige - Belgien',
+        'answer' => 'X',
+        'correct' => 0
+    ],
+    [
+        'match' => 'Italien - Irland',
+        'answer' => '2',
+        'correct' => 0
+    ]
+];
 
-# Score
+/**
+ * Score
+ */
 # En match
 $game->data = [
     'match' => 'Sverige - Belgien',
     'worth' => 5
 ];
-# Score
+$prediction->data = [
+    'match' => 'Sverige - Belgien',
+    'answer' => '1-2',
+    'correct' => 0
+];
 # Flera matcher
 $game->data = [
     [
@@ -48,8 +76,22 @@ $game->data = [
         'worth' => 1
     ],
 ];
+$prediction->data = [
+    [
+        'match' => 'Sverige - Belgien',
+        'answer' => '0-0',
+        'correct' => 0
+    ],
+    [
+        'match' => 'Italien - Irland',
+        'answer' => '0-0',
+        'correct' => 0
+    ],
+];
 
-# Order
+/**
+ * Order
+ */
 # Sluttabell
 $game->data = [
     'teams' => [
@@ -57,10 +99,22 @@ $game->data = [
     ],
     'worth' => [
         'default' => 1,
-        '1' => 20,
-        '2' => 15,
-        '3' => 10,
-        '11' => 10,
-        '12' => 10
+        'teams' => [
+            'Färjestad' => 10,
+            'Skellefteå' => 5
+        ],
+        'positions' => [
+            '1' => 20,
+            '2' => 15,
+            '3' => 10,
+            '11' => 10,
+            '12' => 10
+        ]
+    ]
+];
+$prediction->data = [
+    'order' => [
+        '1' => 'Färjestad',
+        '2' => 'Skellefteå'
     ]
 ];
