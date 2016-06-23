@@ -4,7 +4,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Game extends Model {
 
-	protected $fillable = ['name', 'price', 'status', 'type', 'game_data', 'winner'];
+	protected $fillable = ['name', 'price', 'status', 'type', 'data', 'winner'];
 
 	public function predictions()
 	{
@@ -20,14 +20,14 @@ class Game extends Model {
 		return 0;
 	}
 
-	public function getGameDataAttribute($game_data)
+	public function getDataAttribute($data)
 	{
-		return unserialize($game_data);
+		return unserialize($data);
 	}
 
-	public function setGameDataAttribute($game_data)
+	public function setDataAttribute($data)
 	{
-		$this->attributes['game_data'] = serialize($game_data);
+		$this->attributes['data'] = serialize($data);
 	}
 
 }

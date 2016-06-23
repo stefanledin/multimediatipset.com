@@ -8,7 +8,7 @@ class ScorePredictionTest extends TestCase
 {
     use DatabaseTransactions;
     
-    public function test_admin_can_create_game_type()
+    public function test_admin_can_create_game_type_score()
     {
         $admin = factory(App\User::class)->make(['is_admin' => true]);
         $this->actingAs($admin)
@@ -23,7 +23,10 @@ class ScorePredictionTest extends TestCase
             ->press('Skapa')
             ->see('Sverige - Belgien')
             ->see('20')
-            ->see('Speltyp: Score');
+            ->see('Speltyp: Score')
+            ->type('Sverige - Belgien', 'data[0][match]')
+            ->type(5, 'data[0][worth]')
+            ->press('Lägg till');
     }
 
 }
