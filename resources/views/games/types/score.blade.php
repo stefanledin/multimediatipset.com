@@ -1,5 +1,2 @@
-<div class="input-field col s8">
-	{!! Form::hidden('game_type', 'Score') !!}
+Speltyp: {{ $game->type }}
 
-	{!! Form::text('score', null, ['placeholder' => 'Resultat']) !!}
-</div>

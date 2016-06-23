@@ -4,7 +4,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Game extends Model {
 
-	protected $fillable = ['name', 'price', 'status', 'game_type', 'game_data', 'winner'];
+	protected $fillable = ['name', 'price', 'status', 'type', 'game_data', 'winner'];
 
 	public function predictions()
 	{

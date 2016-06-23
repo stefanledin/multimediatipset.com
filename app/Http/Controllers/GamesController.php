@@ -15,7 +15,7 @@ class GamesController extends Controller {
 
 	public function __construct()
 	{
-		$this->middleware('auth', ['only' => ['create', 'edit', 'destroy']]);
+		$this->middleware('auth', ['only' => ['create', 'edit', 'update', 'destroy']]);
 	}
 
 	/**
@@ -51,14 +51,10 @@ class GamesController extends Controller {
 	public function store(Request $request)
 	{
 		$game = Game::create([
-            'name' => $request->input('name'),
-            'price' => $request->input('price'),
-            'game_type' => $request->input('game-type'),
-            'game_data' => $request->input('game-data'),
-            'status' => $request->input('status')
+            'type' => $request->input('type'),
         ]);
         if ($game) {
-			return redirect()->route('games.show', $game);
+			return redirect()->route('games.edit', $game);
 		}
 	}
 
@@ -114,11 +110,8 @@ class GamesController extends Controller {
 	public function edit($id)
 	{
 		$game = Game::find($id);
-		$game->load('predictions.user');
-		return view('games.edit', [
-			'game' => $game,
-			'statuses' => $this->gameStatuses
-		]);
+		#$game->load('predictions.user');
+		return view('games.edit', compact('game'));
 	}
 
 	/**
@@ -129,19 +122,11 @@ class GamesController extends Controller {
 	 */
 	public function update(Request $request, $id)
 	{
-		$game = Game::find($id);
+		$game = Game::findOrFail($id);
 		$game->name = $request->input('name');
 		$game->price = $request->input('price');
-		$game->status = $request->input('status');
-		$game->game_type = $request->input('game-type');
-		if ($request->has('game_data')) {
-			$game->game_data = $request->input('game_data');
-		}
-		if ($request->has('winner')) {
-			$game->winner = $request->input('winner');
-		}
 		$game->save();
-		return redirect()->route('games.show', $game->id);
+		return redirect()->route('games.edit', $game->id);
 	}
 
 	/**
