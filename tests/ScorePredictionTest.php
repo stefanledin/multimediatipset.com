@@ -18,15 +18,20 @@ class ScorePredictionTest extends TestCase
             ->select('Score', 'type')
             ->press('Välj')
             ->see('Redigera tips')
-            ->type('Sverige - Belgien', 'name')
+            ->type('Fotbolls-EM', 'name')
             ->type(20, 'price')
             ->press('Skapa')
-            ->see('Sverige - Belgien')
+            ->see('Fotbolls-EM')
             ->see('20')
             ->see('Speltyp: Score')
             ->type('Sverige - Belgien', 'data[0][match]')
             ->type(5, 'data[0][worth]')
-            ->press('Lägg till');
+            ->press('Lägg till')
+            ->see('Sverige - Belgien')
+            ->type('Italien - Sverige', 'data[1][match]')
+            ->press('Lägg till')
+            ->see('Sverige - Belgien')
+            ->see('Italien - Sverige');
     }
 
 }

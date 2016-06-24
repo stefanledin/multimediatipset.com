@@ -20,6 +20,11 @@ class Game extends Model {
 		return 0;
 	}
 
+	public function data()
+	{
+		return new Game\Types\Score($this);
+	}
+
 	public function getDataAttribute($data)
 	{
 		return unserialize($data);

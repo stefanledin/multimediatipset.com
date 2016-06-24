@@ -113,8 +113,9 @@ class GamesController extends Controller {
     public function edit($id)
     {
         $game = Game::find($id);
+        $matches = $game->data()->matches();
         #$game->load('predictions.user');
-        return view('games.edit', compact('game'));
+        return view('games.edit', compact('game', 'matches'));
     }
 
     /**
@@ -128,6 +129,7 @@ class GamesController extends Controller {
         $game = Game::findOrFail($id);
         $game->name = $request->input('name');
         $game->price = $request->input('price');
+        $game->data = $request->input('data');
         $game->save();
         return redirect()->route('games.edit', $game->id);
     }
