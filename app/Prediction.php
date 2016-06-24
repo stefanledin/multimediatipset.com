@@ -4,7 +4,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Prediction extends Model {
 
-	protected $fillable = ['prediction', 'user_id', 'game_id'];
+	protected $fillable = ['data', 'user_id', 'game_id'];
 
 	public function game()
 	{
@@ -16,14 +16,14 @@ class Prediction extends Model {
 		return $this->belongsTo('App\User');
 	}
 
-    public function getPredictionAttribute($prediction)
+    public function getDataAttribute($data)
     {
-        return unserialize($prediction);
+        return unserialize($data);
     }
 
-    public function setPredictionAttribute($prediction)
+    public function setDataAttribute($data)
     {
-        $this->attributes['prediction'] = serialize($prediction);
+        $this->attributes['data'] = serialize($data);
     }
 
 }

@@ -70,9 +70,11 @@ class GamesController extends Controller {
     public function show($id)
     {
         $game = Game::find($id);
-        $game->load('predictions.user');
+        #$game->load('predictions.user');
+        $predictions = $game->predictions()->with('user')->get();
+        $matches = $game->data()->matches();
         // Loopa igenom varje tips
-        return view('games.single', compact('game'));
+        return view('games.single', compact('game', 'predictions', 'matches'));
     }
 
     /**

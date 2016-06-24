@@ -11,6 +11,24 @@
                     <span class="card-title">{{ $game->name }}</span>
                     <p>Pris: {{ $game->price }} kr.</p>
                     <p>I potten: {{ $game->inPot() }} kr</p>
+
+                    <form action="{{ route('predictions.store') }}" method="post">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <input type="hidden" name="game_id" value="{{ $game->id }}">
+                        @foreach($matches as $index => $match)
+                            <label>{{ $match->match }}</label>
+                            <input type="text" name="data[{{$index}}][answer]">
+                        @endforeach
+
+                        <button>Tippa</button>
+                    </form>
+
+                    @if($predictions)
+                        @foreach($predictions as $index => $prediction)
+                            {{ $prediction->user->username }} har tippat: {{ $prediction->data[$index]['answer'] }}
+                        @endforeach
+                    @endif
+
                 </div>
             </div>
         </div>
