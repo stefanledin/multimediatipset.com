@@ -34,4 +34,16 @@ class ScorePredictionTest extends TestCase
             ->see('Italien - Sverige');
     }
 
+    public function test_user_can_submit_prediction()
+    {
+        $user = factory(App\User::class)->make();
+        $game = App\Game::create([
+            'name' => 'Fotbolls-EM',
+            'price' => 20
+        ]);
+        $this->actingAs($user)
+            ->visit('/')
+            ->click('Fotbolls-EM');
+    }
+
 }

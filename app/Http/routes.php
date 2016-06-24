@@ -9,6 +9,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('admin/game/{id}', ['as' => 'games.update', 'uses' => 'GamesController@update']);
 });
 
+Route::get('games/{id}', ['as' => 'games.show', 'uses' => 'GamesController@show']);
+
 Route::get('login', ['uses' => 'LoginController@login']);
 Route::get('login/redirect', ['uses' => 'LoginController@handleFacebookCallback']);
 Route::get('logout', ['as' => 'logout', 'uses' => 'LoginController@logout']);
