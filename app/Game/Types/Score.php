@@ -26,14 +26,4 @@ class Score {
         return $matches;
     }
 
-    public function get($gameData)
-    {
-        return unserialize($gameData);
-    }
-
-    public function set($gameData)
-    {
-        return serialize($gameData);
-    }
-
 }

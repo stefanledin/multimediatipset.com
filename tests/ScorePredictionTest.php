@@ -37,6 +37,7 @@ class ScorePredictionTest extends TestCase
     public function test_user_can_submit_prediction()
     {
         $user = App\User::create(['username' => 'Stefan']);
+        $user2 = App\User::create(['username' => 'CreamDiePie']);
         $game = App\Game::create([
             'name' => 'Hockey-VM',
             'price' => 20,
@@ -55,8 +56,18 @@ class ScorePredictionTest extends TestCase
             ->see('Sverige - Tjeckien')
             ->type('3-1', 'data[0][answer]')
             ->press('Tippa')
-            ->see('Stefan har tippat: 3-1')
+            ->see('Stefan har tippat:')
+            ->see('3-1')
             ->see('I potten: 20 kr');
+        $this->actingAs($user2)
+            ->visit('/')
+            ->click('Hockey-VM')
+            ->type('4-2', 'data[0][answer]')
+            ->press('Tippa')
+            ->see('Stefan har tippat:')
+            ->see('CreamDiePie har tippat:')
+            ->see('4-2')
+            ->see('I potten: 40 kr');
     }
 
 }

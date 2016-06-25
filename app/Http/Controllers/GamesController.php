@@ -70,8 +70,8 @@ class GamesController extends Controller {
     public function show($id)
     {
         $game = Game::find($id);
-        #$game->load('predictions.user');
-        $predictions = $game->predictions()->with('user')->get();
+        $game->load('predictions.user');
+        $predictions = $game->predictions()->with('user', 'game')->get();
         $matches = $game->data()->matches();
         // Loopa igenom varje tips
         return view('games.single', compact('game', 'predictions', 'matches'));
@@ -102,7 +102,13 @@ class GamesController extends Controller {
         $game = Game::findOrFail($id);
         $game->name = $request->input('name');
         $game->price = $request->input('price');
-        $game->data = $request->input('data');
+
+        // Filtrera bort tomma arrayer
+        $game->data = collect($request->input('data'))->filter(function ($value)
+        {
+            return array_filter($value);
+        });
+        
         $game->save();
         return redirect()->route('games.edit', $game->id);
     }

@@ -3,7 +3,7 @@
 Route::get('/', ['as' => 'home', 'uses' => 'GamesController@index']);
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('admin/game/new', 'GamesController@create');
+    Route::get('admin/game/new', ['as' => 'games.create', 'uses' => 'GamesController@create']);
     Route::post('admin/game/new', ['as' => 'games.store', 'uses' => 'GamesController@store']);
     Route::get('admin/game/{id}', ['as' => 'games.edit', 'uses' => 'GamesController@edit']);
     Route::post('admin/game/{id}', ['as' => 'games.update', 'uses' => 'GamesController@update']);
