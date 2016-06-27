@@ -1,5 +1,26 @@
 <?php
 
+Game::create([
+    'name' => 'Fotbolls-EM 2016: Slutspel'
+    'levels' => ['Åttondelsfinal', 'Kvartsfinal', 'Semifinal', 'Final'],
+    'winner' => 0,
+    'price' => 20,
+    'in_pot' => 0
+]);
+
+Question::create([
+    'title' => 'Schweiz - Polen',
+    'alternatives' => ['1', 'X', '2'],
+    'worth' => 1,
+    'correct' => 0,
+    'game_id' => 1
+]);
+
+Answer::create([
+    'answer' => '1',
+    'correct' => false
+]);
+
 /**
  * Alternativ
  */
