@@ -1,123 +1,95 @@
 <?php
-
-Game::create([
-    'name' => 'Fotbolls-EM 2016: Slutspel'
-    'levels' => ['Åttondelsfinal', 'Kvartsfinal', 'Semifinal', 'Final'],
-    'winner' => 0,
-    'price' => 20,
-    'in_pot' => 0
-]);
-
-Question::create([
-    'title' => 'Schweiz - Polen',
-    'alternatives' => ['1', 'X', '2'],
-    'worth' => 1,
-    'correct' => 0,
-    'game_id' => 1
-]);
-
-Answer::create([
-    'answer' => '1',
-    'correct' => false
-]);
-
 /**
  * Alternativ
  */
 # En match
-$game->data = [
-    'match' => 'Sverige - Belgien',
+Game::create([
+    'name' => 'Sverige - Belgien',
+    'type' => 'Alternatives'
+]);
+Question::create([
+    'title' => 'Resultat',
     'alternatives' => ['1', 'X', '2'],
     'worth' => 5,
-    'correct' => 0
-];
-$prediction->data = [
-    'match' => 'Sverige - Belgien',
-    'answer' => '1'
-];
+    'answer' => 0,
+    'game_id' => 1,
+]);
+Answer::create([
+    'question_id' => 1,
+    'answer' => '1',
+    'is_correct' => false
+]);
 
-$game->data = [
-    'question' => 'Vinner Sverige mot Belgien?',
-    'alternatives' => ['Ja', 'Nej'],
-    'worth' => 5
-];  
-$prediction->data = [
-    'answer' => 'Ja'
-];
+Question::create([
+    'title' => 'Vinner Sverige mot Belgien?',
+    'alternatives' => ['1', 'X', '2'],
+    'worth' => 5,
+    'answer' => 0,
+    'game_id' => 1,
+]);
+Answer::create([
+    'question_id' => 2,
+    'answer' => 'Ja',
+    'is_correct' => false
+]);
 
 # Flera matcher
-$game->data = [
-    [
-        'match' => 'Sverige - Belgien',
-        'alternatives' => ['1', 'X', '2'],
-        'worth' => 5,
-        'correct' => 0
-    ],
-    [
-        'match' => 'Italien - Irland',
-        'alternatives' => ['1', 'X', '2'],
-        'worth' => 1,
-        'correct' => 0
-    ]
-];
-$prediction->data = [
-    [
-        'match' => 'Sverige - Belgien',
-        'answer' => 'X',
-        'correct' => 0
-    ],
-    [
-        'match' => 'Italien - Irland',
-        'answer' => '2',
-        'correct' => 0
-    ]
-];
+Question::create([
+    'title' => 'Sverige - Belgien',
+    'alternatives' => ['1', 'X', '2'],
+    'worth' => 5,
+    'answer' => 0,
+    'game_id' => 1,
+]);
+Question::create([
+    'title' => 'Italien - Irland',
+    'alternatives' => ['1', 'X', '2'],
+    'worth' => 1,
+    'answer' => 0,
+    'game_id' => 1,
+]);
+Answer::create([
+    'question_id' => 2,
+    'answer' => '2',
+    'is_correct' => false
+]);
+Answer::create([
+    'question_id' => 3,
+    'answer' => '1',
+    'is_correct' => false
+]);
 
 /**
  * Score
  */
 # En match
-$game->data = [
-    'match' => 'Sverige - Belgien',
-    'worth' => 5
-];
-$prediction->data = [
-    'match' => 'Sverige - Belgien',
+Game::create([
+    'name' => 'Sverige - Belgien',
+    'type' => 'Score'
+]);
+Question::create([
+    'title' => 'Resultat',
+    'worth' => 5,
+    'answer' => 0,
+    'game_id' => 1,
+]);
+Answer::create([
+    'question_id' => 1,
     'answer' => '1-2',
-    'correct' => 0
-];
-# Flera matcher
-$game->data = [
-    [
-        'match' => 'Sverige - Belgien',
-        'worth' => 5
-    ],
-    [
-        'match' => 'Italien - Irland',
-        'worth' => 1
-    ],
-];
-$prediction->data = [
-    [
-        'match' => 'Sverige - Belgien',
-        'answer' => '0-0',
-        'correct' => 0
-    ],
-    [
-        'match' => 'Italien - Irland',
-        'answer' => '0-0',
-        'correct' => 0
-    ],
-];
+    'is_correct' => false
+]);
 
 /**
  * Order
  */
 # Sluttabell
-$game->data = [
-    'teams' => [
-        'Färjestad', 'Frölunda', 'Skellefteå', 'Linköping', 'Växjö'
-    ],
+Game::create([
+    'name' => 'SHL Grundserie 2016',
+    'type' => 'Order'
+]);
+Question::create([
+    'title' => 'Sluttabell',
+    'teams' => ['Färjestad', 'Frölunda', 'Skellefteå', 'Linköping', 'Växjö'],
     'worth' => [
         'default' => 1,
         'teams' => [
@@ -131,11 +103,29 @@ $game->data = [
             '11' => 10,
             '12' => 10
         ]
-    ]
-];
-$prediction->data = [
-    'order' => [
+    ],
+    'worth' => 5,
+    'answer' => 0,
+    'game_id' => 1,
+]);
+Answer::create([
+    'question_id' => 1,
+    'answer' => [
         '1' => 'Färjestad',
         '2' => 'Skellefteå'
-    ]
-];
+    ],
+    'is_correct' => false
+]);
+
+/**
+ * Medaljliga
+ */
+Game::create([
+    'name' => 'Sommar-OS 2016',
+    'type' => 'Order'
+]);
+Question::create([
+    'title' => 'Hur många medaljer tar Sverige?'
+    'alternatives' => ['Guld', 'Silver', 'Brons'],
+    'worth' => ['Guld' => ]
+]);

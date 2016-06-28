@@ -11,6 +11,11 @@ class Game extends Model {
 		return $this->hasMany('App\Prediction');
 	}
 
+	public function questions()
+	{
+		return $this->hasMany('App\Question');
+	}
+
 	public function inPot()
 	{
 		$predictions = $this->predictions;
