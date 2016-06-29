@@ -14,6 +14,10 @@ class CreateQuestionsTable extends Migration
     {
         Schema::create('questions', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('title');
+            $table->integer('worth');
+            $table->text('alternatives');
+            $table->text('answer');
             $table->integer('game_id')->unsigned();
             $table->foreign('game_id')->references('id')->on('games');
             $table->timestamps();

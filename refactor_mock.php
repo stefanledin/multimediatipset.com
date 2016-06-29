@@ -1,4 +1,11 @@
 <?php
+// Tabeller
+// 
+// Game (name, type, cost, in_pot, winners, levels?)
+// Question (title, worth, answer, alternatives)
+// Answer (answer, is_correct)
+
+
 /**
  * Alternativ
  */
@@ -121,11 +128,39 @@ Answer::create([
  * Medaljliga
  */
 Game::create([
-    'name' => 'Sommar-OS 2016',
-    'type' => 'Order'
+    'name' => 'Sverige - Belgien',
+    'type' => 'Score'
 ]);
 Question::create([
-    'title' => 'Hur många medaljer tar Sverige?'
-    'alternatives' => ['Guld', 'Silver', 'Brons'],
-    'worth' => ['Guld' => ]
+    'title' => 'Guld',
+    'worth' => 5,
+    'answer' => 0,
+    'game_id' => 4,
+]);
+Question::create([
+    'title' => 'Silver',
+    'worth' => 3,
+    'answer' => 0,
+    'game_id' => 4,
+]);
+Question::create([
+    'title' => 'Brons',
+    'worth' => 1,
+    'answer' => 0,
+    'game_id' => 4,
+]);
+Answer::create([
+    'question_id' => 1,
+    'answer' => '1',
+    'is_correct' => false
+]);
+Answer::create([
+    'question_id' => 1,
+    'answer' => '2',
+    'is_correct' => false
+]);
+Answer::create([
+    'question_id' => 1,
+    'answer' => '3',
+    'is_correct' => false
 ]);
