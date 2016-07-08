@@ -21,7 +21,7 @@
 
                             @include('games.types.'.$game->type)
                 
-                            <button>Skapa</button>
+                            <button>Spara</button>
 
                         </form>
                     </div>

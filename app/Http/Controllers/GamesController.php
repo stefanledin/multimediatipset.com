@@ -51,13 +51,10 @@ class GamesController extends Controller {
     public function store(Request $request)
     {
         $game = Game::create([
-            'type' => $request->input('type'),
-            'data' => [
-                []
-            ]
+            'type' => $request->input('type')
         ]);
         if ($game) {
-            return redirect()->route('games.edit', $game);
+            return redirect()->route('admin.games.edit', $game);
         }
     }
 
@@ -70,11 +67,7 @@ class GamesController extends Controller {
     public function show($id)
     {
         $game = Game::find($id);
-        $game->load('predictions.user');
-        $predictions = $game->predictions()->with('user', 'game')->get();
-        $matches = $game->data()->matches();
-        // Loopa igenom varje tips
-        return view('games.single', compact('game', 'predictions', 'matches'));
+        return view('games.single', compact('game'));
     }
 
     /**
@@ -86,9 +79,7 @@ class GamesController extends Controller {
     public function edit($id)
     {
         $game = Game::find($id);
-        $matches = $game->data()->matches();
-        #$game->load('predictions.user');
-        return view('games.edit', compact('game', 'matches'));
+        return view('games.edit', compact('game'));
     }
 
     /**
@@ -103,14 +94,8 @@ class GamesController extends Controller {
         $game->name = $request->input('name');
         $game->price = $request->input('price');
 
-        // Filtrera bort tomma arrayer
-        $game->data = collect($request->input('data'))->filter(function ($value)
-        {
-            return array_filter($value);
-        });
-        
         $game->save();
-        return redirect()->route('games.edit', $game->id);
+        return redirect()->route('games.show', $game->id);
     }
 
     /**

@@ -10,6 +10,7 @@
                 </div>
                 <span class="card-title">Skapa nytt tips</span>
                 <div class="row">
+
                     <form id="create-game" action="{{ route('games.store')  }}" method="post" class="col s12 white">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         
@@ -22,6 +23,7 @@
                         
                         <button name="select_game_type">Välj</button>
                     </form>
+                    
                 </div>
             </div>
         </div>

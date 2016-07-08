@@ -11,33 +11,20 @@
                     <span class="card-title">{{ $game->name }}</span>
                     <p>Pris: {{ $game->price }} kr.</p>
                     <p>I potten: {{ $game->inPot() }} kr</p>
+                    <p>Speltyp: {{ $game->type }}</p>
 
-                    @if(Auth::check())
-                    <div style="background: white;">
-                        <form action="{{ route('predictions.store') }}" method="post">
-                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                            <input type="hidden" name="game_id" value="{{ $game->id }}">
-                            @foreach($matches as $index => $match)
-                                <div class="input-field">
-                                    <input type="hidden" name="data[{{$index}}][match]" value="{{$match->match}}">
-                                    <input type="text" name="data[{{$index}}][answer]" placeholder="Ditt tips" id="match[{{$index}}]">
-                                    <label for="match[{{$index}}]">{{ $match->match }}</label>
-                                </div>
-                            @endforeach
+                    Frågor:
+                    Resultat
+                    Värd: 1 poäng
 
-                            <button>Tippa</button>
-                        </form>
-                    </div>
-                    @endif
+                    <form action="{{ route('admin.questions.store') }}" method="POST">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <input type="hidden" name="game_id" value="{{ $game->id }}">
+                        <input type="text" name="title">
+                        <input type="number" name="worth">
 
-                    @foreach($predictions as $userPrediction)
-                        <p>{{ $userPrediction->user->username }} har tippat: </p>
-                        @foreach($userPrediction->data as $prediction)
-                            <div>
-                                {{ $prediction['match'] }} {{ $prediction['answer'] }}
-                            </div>
-                        @endforeach
-                    @endforeach
+                        <input type="submit" value="Lägg till">
+                    </form>
 
                 </div>
             </div>

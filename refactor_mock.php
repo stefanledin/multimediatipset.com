@@ -12,7 +12,7 @@
 # En match
 Game::create([
     'name' => 'Sverige - Belgien',
-    'type' => 'Alternatives'
+    'type' => 'Alternatives',
 ]);
 Question::create([
     'title' => 'Resultat',
@@ -69,6 +69,14 @@ Answer::create([
 /**
  * Score
  */
+/*
+1. Nytt tips
+2. Välj typ av tips
+3. Tipsets namn och pris
+4. Spara
+5. Lägg till alternativ
+*/
+
 # En match
 Game::create([
     'name' => 'Sverige - Belgien',
