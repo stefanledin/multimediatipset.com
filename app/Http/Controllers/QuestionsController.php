@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\Question;
+use App\Game;
+
 class QuestionsController extends Controller
 {
     /**
@@ -37,6 +40,12 @@ class QuestionsController extends Controller
      */
     public function store(Request $request)
     {
+        $question = new Question([
+            'title' => $request->input('title'),
+            'worth' => $request->input('worth')
+        ]);
+        $game = Game::find($request->input('game_id'));
+        $game->questions()->save($question);
         return redirect(route('games.show', $request->input('game_id')));
     }
 
@@ -59,7 +68,8 @@ class QuestionsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $question = Question::find($id);
+        return view('questions.edit', compact('question'));
     }
 
     /**
@@ -71,7 +81,12 @@ class QuestionsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $question = Question::find($id);
+        $question->title = $request->input('title');
+        $question->worth = $request->input('worth');
+        $question->save();
+        $game = Game::find($question->game_id);
+        return redirect(route('games.show', $game->id));
     }
 
     /**

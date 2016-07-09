@@ -13,10 +13,15 @@
                     <p>I potten: {{ $game->inPot() }} kr</p>
                     <p>Speltyp: {{ $game->type }}</p>
 
-                    Frågor:
-                    Resultat
-                    Värd: 1 poäng
-
+                    @if($game->questions)
+                    <h2>Frågor</h2>
+                        @foreach($game->questions as $question)
+                            {{ $question->title }} <a href="{{ route('admin.questions.edit', $question->id) }}">Redigera</a>
+                            Värd: {{ $question->worth }} poäng
+                        @endforeach
+                    @endif
+    
+                    <h2>Lägg till fråga</h2>
                     <form action="{{ route('admin.questions.store') }}" method="POST">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <input type="hidden" name="game_id" value="{{ $game->id }}">
