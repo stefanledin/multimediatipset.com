@@ -4,6 +4,10 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
+use App\User;
+use App\Game;
+use App\Question;
+
 class ScorePredictionTest extends TestCase
 {
     use DatabaseTransactions;
@@ -21,6 +25,7 @@ class ScorePredictionTest extends TestCase
             // Sparades det?
             ->see('Sverige - Italien')
             ->see('20')
+            
             // Lägg till och spara fråga
             ->type('Resultat', 'title')
             ->type('1', 'worth')
@@ -41,38 +46,17 @@ class ScorePredictionTest extends TestCase
 
     /*public function test_user_can_submit_prediction()
     {
-        $user = App\User::create(['username' => 'Stefan']);
-        $user2 = App\User::create(['username' => 'CreamDiePie']);
-        $game = App\Game::create([
-            'name' => 'Hockey-VM',
-            'price' => 20,
-            'data' => [
-                [
-                    'match' => 'Sverige - Tjeckien'
-                ]
-            ]
+        $user = User::create(['username' => 'Stefan']);
+        $user2 = User::create(['username' => 'CreamDiePie']);
+        $game = Game::create([
+            'name' => 'Sverige - Belgien',
+            'price' => 10
         ]);
-        $this->actingAs($user)
-            ->visit('/')
-            ->click('Hockey-VM')
-            ->see('Hockey-VM')
-            ->see('Pris: 20 kr.')
-            ->see('I potten: 0 kr')
-            ->see('Sverige - Tjeckien')
-            ->type('3-1', 'data[0][answer]')
-            ->press('Tippa')
-            ->see('Stefan har tippat:')
-            ->see('3-1')
-            ->see('I potten: 20 kr');
-        $this->actingAs($user2)
-            ->visit('/')
-            ->click('Hockey-VM')
-            ->type('4-2', 'data[0][answer]')
-            ->press('Tippa')
-            ->see('Stefan har tippat:')
-            ->see('CreamDiePie har tippat:')
-            ->see('4-2')
-            ->see('I potten: 40 kr');
+        $question = new Question([
+            'title' => 'Resultat',
+            'worth' => 5,
+            'type' => 'Score'
+        ]);
+        $game->questions()->save($question);
     }*/
-
 }

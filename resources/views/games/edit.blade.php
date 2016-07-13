@@ -19,7 +19,7 @@
                             <label for="price">Pris</label>
                             <input type="number" id="price" name="price" value="{{ $game->price }}">
 
-                            <button>Spara</button>
+                            <input type="submit" value="Spara">
                         </form>
 
                         @if($game->questions)
