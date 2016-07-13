@@ -51,7 +51,8 @@ class GamesController extends Controller {
     public function store(Request $request)
     {
         $game = Game::create([
-            'type' => $request->input('type')
+            'name' => $request->input('name'),
+            'price' => $request->input('price')
         ]);
         if ($game) {
             return redirect()->route('admin.games.edit', $game);

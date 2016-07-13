@@ -14,14 +14,13 @@
                     <form id="create-game" action="{{ route('games.store')  }}" method="post" class="col s12 white">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         
-                        <div class="input-field col s12">
-                            <label for="game_type">Välj typ av tips:</label>
-                            <select name="type" id="game_type" class="browser-default">
-                                <option value="Score">Resultat/poäng</option>
-                            </select>
-                        </div>
-                        
-                        <button name="select_game_type">Välj</button>
+                        <label for="name">Namn</label>
+                        <input type="text" id="name" name="name">
+
+                        <label for="price">Pris</label>
+                        <input type="number" id="price" name="price">
+
+                        <button name="select_game_type">Skapa</button>
                     </form>
                     
                 </div>

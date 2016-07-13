@@ -16,6 +16,7 @@ class CreateQuestionsTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->integer('worth');
+            $table->string('type');
             $table->text('alternatives');
             $table->text('answer');
             $table->integer('game_id')->unsigned();

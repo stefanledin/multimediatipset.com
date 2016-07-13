@@ -42,11 +42,12 @@ class QuestionsController extends Controller
     {
         $question = new Question([
             'title' => $request->input('title'),
-            'worth' => $request->input('worth')
+            'worth' => $request->input('worth'),
+            'type' => $request->input('type')
         ]);
         $game = Game::find($request->input('game_id'));
         $game->questions()->save($question);
-        return redirect(route('games.show', $request->input('game_id')));
+        return redirect(route('admin.games.edit', $request->input('game_id')));
     }
 
     /**
@@ -84,9 +85,10 @@ class QuestionsController extends Controller
         $question = Question::find($id);
         $question->title = $request->input('title');
         $question->worth = $request->input('worth');
+        $question->type = $request->input('type');
         $question->save();
         $game = Game::find($question->game_id);
-        return redirect(route('games.show', $game->id));
+        return redirect(route('admin.games.edit', $game->id));
     }
 
     /**

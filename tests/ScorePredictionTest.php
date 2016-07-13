@@ -15,25 +15,23 @@ class ScorePredictionTest extends TestCase
             // Skapa tipset
             ->visit('/admin/game/new')
             ->see('Skapa nytt tips')
-            ->see('Välj typ av tips')
-            ->select('Score', 'type')
-            ->press('Välj')
-            // Lägg till tipsdetaljer
-            ->see('Redigera tips')
             ->type('Sverige - Italien', 'name')
             ->type(20, 'price')
-            ->press('Spara')
-            // Spara
+            ->press('Skapa')
+            // Sparades det?
             ->see('Sverige - Italien')
             ->see('20')
             // Lägg till och spara fråga
             ->type('Resultat', 'title')
             ->type('1', 'worth')
+            ->see('Välj typ av tips')
+            ->select('Score', 'type')
             ->press('Lägg till')
             // Sparades det?
             ->see('Frågor')
             ->see('Resultat')
             ->see('Värd: 1 poäng')
+            ->see('Typ: Score')
             // Uppdatera
             ->click('Redigera')
             ->type('5', 'worth')
