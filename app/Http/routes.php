@@ -3,6 +3,7 @@
 Route::get('/', ['as' => 'home', 'uses' => 'GamesController@index']);
 
 Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function () {
+
     Route::get('game/new', ['as' => 'games.create', 'uses' => 'GamesController@create']);
     Route::post('game/new', ['as' => 'games.store', 'uses' => 'GamesController@store']);
     Route::get('game/{id}', ['as' => 'admin.games.edit', 'uses' => 'GamesController@edit']);
@@ -20,4 +21,5 @@ Route::get('logout', ['as' => 'logout', 'uses' => 'LoginController@logout']);
 Route::get('users/{id}', ['uses' => 'UsersController@show']);
 Route::post('users/{id}', ['uses' => 'UsersController@update']);
 
+Route::resource('answers', 'AnswersController');
 Route::resource('predictions', 'PredictionsController');

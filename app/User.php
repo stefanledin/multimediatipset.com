@@ -6,31 +6,39 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 
 class User extends Model implements AuthenticatableContract {
 
-	use Authenticatable;
+    use Authenticatable;
 
-	/**
-	 * The database table used by the model.
-	 *
-	 * @var string
-	 */
-	protected $table = 'users';
+    /**
+     * The database table used by the model.
+     *
+     * @var string
+     */
+    protected $table = 'users';
 
-	/**
-	 * The attributes that are mass assignable.
-	 *
-	 * @var array
-	 */
-	protected $fillable = [
-		'uid', 'username', 'first_name', 'last_name',
-		'profile_picture', 'profile_picture_thumbnail', 'is_admin'
-	];
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'uid', 'username', 'first_name', 'last_name',
+        'profile_picture', 'profile_picture_thumbnail', 'is_admin'
+    ];
+
+    /**
+     * The user has many answers
+     */
+    public function answers()
+    {
+        return $this->hasMany('App\Answer');
+    }
 
     /**
      * The user has many predictions
      */
     public function predictions()
-	{
-		return $this->hasMany('App\Prediction');
-	}
+    {
+        return $this->hasMany('App\Prediction');
+    }
 
 }
