@@ -12,5 +12,7 @@
     <input type="text" name="title" value="{{ $question->title }}">
     <input type="number" name="worth" value="{{ $question->title }}">
 
+    <input type="text" name="answer" value="{{ $question->answer }}">
+
     <input type="submit" value="Uppdatera">
 </form>

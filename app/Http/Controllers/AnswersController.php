@@ -41,13 +41,17 @@ class AnswersController extends Controller
      */
     public function store(Request $request)
     {
-        $answer = new Answer([
-            'answer' => $request->input('answer')
-        ]);
-        $question = Question::find($request->input('question_id'));
-        $question->answers()->save($answer);
         $user = Auth::user();
-        $user->answers()->save($answer);
+        
+        $answers = $request->input('answer');
+        foreach ($answers as $questionID => $answer) {
+            $answer = new Answer([
+                'answer' => $answer
+            ]);
+            $question = Question::find($questionID);
+            $question->answers()->save($answer);
+            $user->answers()->save($answer);
+        }
         return redirect(route('games.show', $request->input('game_id')));
     }
 

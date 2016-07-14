@@ -8,6 +8,7 @@
                     <div>
                         <a href="{{ route('home') }}" class="btn grey darken-2"><i class="mdi-hardware-keyboard-arrow-left left"></i>Tillbaka</a>
                     </div>
+                    <div><a href="{{ route('admin.games.edit', $game->id) }}">Redigera</a></div>
                     <span class="card-title">{{ $game->name }}</span>
                     <p>Pris: {{ $game->price }} kr.</p>
                     <p>I potten: {{ $game->inPot() }} kr</p>
@@ -15,7 +16,7 @@
                     @if($game->questions)
                         <h2>Tips</h2>
                         @foreach($game->questions as $question)
-                            @if($question->answers)
+                            @if(!empty($question->answers))
                                 @foreach($question->answers as $answer)
                                     {{ $answer->user->username }} har tippat: {{ $answer->answer }}
                                 @endforeach
@@ -25,17 +26,17 @@
                     
                     <h2>Lägg till tips</h2>
                     @if($game->questions)
-                        @foreach($game->questions as $question)
-                            <h3>{{ $question->title }}</h3>
-                            <form action="{{ route('answers.store') }}" method="POST">
-                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <form action="{{ route('answers.store') }}" method="POST">
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                            <input type="hidden" name="game_id" value="{{ $game->id }}">
+                            @foreach($game->questions as $question)
                                 <input type="hidden" name="question_id" value="{{ $question->id }}">
-                                <input type="hidden" name="game_id" value="{{ $game->id }}">
-                                <input type="text" name="answer">
+                                <h3>{{ $question->title }}</h3>
+                                <input type="text" name="answer[{{$question->id}}]">
 
-                                <input type="submit" value="Tippa">
-                            </form>
-                        @endforeach
+                            @endforeach
+                            <input type="submit" value="Tippa">
+                        </form>
                     @endif
 
                 </div>
