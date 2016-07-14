@@ -148,4 +148,33 @@ class ScorePredictionTest extends TestCase
             ->press('Uppdatera');
     }
 
+    public function test_game_has_leaderboard()
+    {
+        $user1 = factory(User::class)->create();
+        $user2 = factory(User::class)->create();
+        $game = Game::create([
+            'name' => 'Fotbolls-EM: Grupp A',
+            'price' => 20
+        ]);
+        $question1 = new Question([
+            'title' => 'Frankrike - Rumänien',
+            'worth' => 5,
+            'answer' => '2-1'
+        ]);
+        $question2 = new Question([
+            'title' => 'Albanien - Schweiz',
+            'worth' => 1,
+            'answer' => '0-1'
+        ]);
+        $user1_question1_answer = new Answer(['answer' => '2 - 1']);
+        $user1_question2_answer = new Answer(['answer' => '1 - 0']);
+        $user1->answers()->saveMany([$user1_question1_answer, $user1_question2_answer]);
+
+        $user2_question1_answer = new Answer(['answer' => '2-0']);
+        $user2_question2_answer = new Answer(['answer' => '0-1']);
+
+        $question1->answers()->saveMany([$user1_question1_answer, $user2_question1_answer]);
+        $question2->answers()->saveMany([$user1_question2_answer, $user2_question2_answer]);
+    }
+
 }
