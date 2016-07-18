@@ -15,6 +15,12 @@ class Game extends Model {
 	{
 		return $this->hasMany('App\Question');
 	}
+	public function questionsWithAnswers()
+	{
+		return $this->questions->filter(function($question) {
+        	return ($question->answer != '') ? $question : null;
+		});
+	}
 
 	public function inPot()
 	{

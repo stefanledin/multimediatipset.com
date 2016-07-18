@@ -17,4 +17,21 @@ class Question extends Model
     {
         return $this->hasMany('App\Answer');
     }
+
+    public function correctAnswers()
+    {
+        return $this->answers->filter(function($answer) {
+            if ($answer->answer == $this->answer) {
+                 return $answer;
+             } 
+        });
+    }
+
+    public function playersWithCorrectAnswers()
+    {
+        /*return $this->answers->each(function ($answer)
+        {
+            $answer-
+        })*/
+    }
 }

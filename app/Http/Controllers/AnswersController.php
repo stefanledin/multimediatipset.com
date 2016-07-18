@@ -46,7 +46,7 @@ class AnswersController extends Controller
         $answers = $request->input('answer');
         foreach ($answers as $questionID => $answer) {
             $answer = new Answer([
-                'answer' => $answer
+                'answer' => str_replace(' ', '', $answer)
             ]);
             $question = Question::find($questionID);
             $question->answers()->save($answer);

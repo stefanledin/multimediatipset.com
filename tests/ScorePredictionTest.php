@@ -163,9 +163,10 @@ class ScorePredictionTest extends TestCase
         ]);
         $question2 = new Question([
             'title' => 'Albanien - Schweiz',
-            'worth' => 1,
-            'answer' => '0-1'
+            'worth' => 1
         ]);
+        $game->questions()->saveMany([$question1, $question2]);
+        
         $user1_question1_answer = new Answer(['answer' => '2 - 1']);
         $user1_question2_answer = new Answer(['answer' => '1 - 0']);
         $user1->answers()->saveMany([$user1_question1_answer, $user1_question2_answer]);
@@ -175,6 +176,21 @@ class ScorePredictionTest extends TestCase
 
         $question1->answers()->saveMany([$user1_question1_answer, $user2_question1_answer]);
         $question2->answers()->saveMany([$user1_question2_answer, $user2_question2_answer]);
+
+        #$leaderBoard = $game->leaderBoard();
+        
+        $this->assertCount(1, $game->questionsWithAnswers());
+        var_dump($question1->correctAnswers());
+        $this->assertCount(1, $question1->correctAnswers());
+        #$this->assertEquals($user1->username,$question1->playersWithCorrectAnswers())[0]->username;
+
+        /*
+        1. User 1: 1/1 rätt. 5/6 poäng
+        2. User 2: 0/1. 0/6 poäng
+         */
+        /*$player->correctAnswers
+        $game->pointsAvaliable()
+        $player->points*/
     }
 
 }
