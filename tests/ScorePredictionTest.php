@@ -163,34 +163,44 @@ class ScorePredictionTest extends TestCase
         ]);
         $question2 = new Question([
             'title' => 'Albanien - Schweiz',
+            'worth' => 1,
+            'answer' => '0-1'
+        ]);
+        $question3 = new Question([
+            'title' => 'Rumänien - Schweiz',
             'worth' => 1
         ]);
-        $game->questions()->saveMany([$question1, $question2]);
+        $game->questions()->saveMany([$question1, $question2, $question3]);
         
         $user1_question1_answer = new Answer(['answer' => '2 - 1']);
         $user1_question2_answer = new Answer(['answer' => '1 - 0']);
-        $user1->answers()->saveMany([$user1_question1_answer, $user1_question2_answer]);
+        $user1_question3_answer = new Answer(['answer' => '1 - 0']);
+        $user1->answers()->saveMany([$user1_question1_answer, $user1_question2_answer, $user1_question3_answer]);
 
         $user2_question1_answer = new Answer(['answer' => '2-0']);
         $user2_question2_answer = new Answer(['answer' => '0-1']);
+        $user2_question3_answer = new Answer(['answer' => '0-1']);
+        $user2->answers()->saveMany([$user2_question1_answer, $user2_question2_answer, $user2_question3_answer]);
 
         $question1->answers()->saveMany([$user1_question1_answer, $user2_question1_answer]);
         $question2->answers()->saveMany([$user1_question2_answer, $user2_question2_answer]);
+        $question3->answers()->saveMany([$user1_question3_answer, $user2_question3_answer]);
 
-        #$leaderBoard = $game->leaderBoard();
-        
-        $this->assertCount(1, $game->questionsWithAnswers());
-        var_dump($question1->correctAnswers());
+        $this->assertCount(2, $game->questionsWithAnswers());
         $this->assertCount(1, $question1->correctAnswers());
-        #$this->assertEquals($user1->username,$question1->playersWithCorrectAnswers())[0]->username;
+        
+        // $question1
+        $this->assertEquals($user1->username, $question1->leaderBoard()->players[0]->user->username);
+        $this->assertEquals($user2->username, $question1->leaderBoard()->players[1]->user->username);
+        $this->assertEquals(5, $question1->leaderBoard()->players[0]->points);
+        $this->assertEquals(0, $question1->leaderBoard()->players[1]->points);
 
-        /*
-        1. User 1: 1/1 rätt. 5/6 poäng
-        2. User 2: 0/1. 0/6 poäng
-         */
-        /*$player->correctAnswers
-        $game->pointsAvaliable()
-        $player->points*/
+        // $question2
+        $this->assertEquals($user2->username, $question2->leaderBoard()->players[0]->user->username);
+        $this->assertEquals($user1->username, $question2->leaderBoard()->players[1]->user->username);
+        $this->assertEquals(1, $question2->leaderBoard()->players[0]->points);
+        $this->assertEquals(0, $question2->leaderBoard()->players[1]->points);
+        
     }
 
 }

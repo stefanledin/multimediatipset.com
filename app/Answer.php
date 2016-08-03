@@ -17,4 +17,14 @@ class Answer extends Model
     {
         return $this->belongsTo('App\User');
     }
+
+    public function isCorrect()
+    {
+        return $this->answer == $this->question->answer;
+    }
+
+    public function setAnswerAttribute($value)
+    {
+        $this->attributes['answer'] = str_replace(' ', '', $value);
+    }
 }

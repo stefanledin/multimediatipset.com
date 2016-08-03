@@ -21,17 +21,33 @@ class Question extends Model
     public function correctAnswers()
     {
         return $this->answers->filter(function($answer) {
-            if ($answer->answer == $this->answer) {
-                 return $answer;
-             } 
+            return $answer->isCorrect();
         });
     }
 
     public function playersWithCorrectAnswers()
     {
-        /*return $this->answers->each(function ($answer)
+        return $this->correctAnswers()->map(function ($answer)
         {
-            $answer-
-        })*/
+            return $answer->user;
+        });
+    }
+
+    public function leaderBoard()
+    {
+        $answers = $this->answers->sortBy(function ($answer) {
+            return ($answer->isCorrect()) ? 1 : 0;
+        })->reverse();
+        $players = $answers->map(function ($answer)
+        {
+            $points = ($answer->isCorrect()) ? $this->worth : 0;
+            return (object) [
+                'user' => $answer->user,
+                'points' => $points
+            ];
+        });
+        return (object) [
+            'players' => $players
+        ];
     }
 }
