@@ -35,16 +35,13 @@ class Question extends Model
 
     public function leaderBoard()
     {
-        $answers = $this->answers->sortBy(function ($answer) {
+        $players = $this->answers->sortBy(function ($answer) {
             return ($answer->isCorrect()) ? 1 : 0;
-        })->reverse();
-        $players = $answers->map(function ($answer)
+        })->reverse()->map(function ($answer)
         {
-            $points = ($answer->isCorrect()) ? $this->worth : 0;
-            return (object) [
-                'user' => $answer->user,
-                'points' => $points
-            ];
+            $answer->user->points = ($answer->isCorrect()) ? $this->worth : 0;
+            $answer->user->isCorrect = $answer->isCorrect();
+            return $answer->user;
         });
         return (object) [
             'players' => $players

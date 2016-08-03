@@ -190,17 +190,28 @@ class ScorePredictionTest extends TestCase
         $this->assertCount(1, $question1->correctAnswers());
         
         // $question1
-        $this->assertEquals($user1->username, $question1->leaderBoard()->players[0]->user->username);
-        $this->assertEquals($user2->username, $question1->leaderBoard()->players[1]->user->username);
+        $this->assertEquals($user1->username, $question1->leaderBoard()->players[0]->username);
+        $this->assertEquals($user2->username, $question1->leaderBoard()->players[1]->username);
         $this->assertEquals(5, $question1->leaderBoard()->players[0]->points);
         $this->assertEquals(0, $question1->leaderBoard()->players[1]->points);
 
         // $question2
-        $this->assertEquals($user2->username, $question2->leaderBoard()->players[0]->user->username);
-        $this->assertEquals($user1->username, $question2->leaderBoard()->players[1]->user->username);
+        $this->assertEquals($user2->username, $question2->leaderBoard()->players[0]->username);
+        $this->assertEquals($user1->username, $question2->leaderBoard()->players[1]->username);
         $this->assertEquals(1, $question2->leaderBoard()->players[0]->points);
         $this->assertEquals(0, $question2->leaderBoard()->players[1]->points);
+
+        // $game
+        $this->assertEquals(2, count($game->questionsWithAnswers()));
+        $this->assertEquals(6, $game->pointsAvaliable());
+        // 1. $user1->username | 1/2 rätt | 5/6 poäng
+        $this->assertEquals(1, $game->leaderBoard()->players[0]->correctAnswers);
+        $this->assertEquals(5, $game->leaderBoard()->players[0]->points);
         
+        // 2. $user2->username | 1/2 rätt | 1/6 poäng
+        $this->assertEquals(1, $game->leaderBoard()->players[1]->correctAnswers);
+        $this->assertEquals(1, $game->leaderBoard()->players[1]->points);
+
     }
 
 }
