@@ -23,5 +23,6 @@ elixir(function(mix) {
 		'materialize.min.css',
         'admin.css',
         'app.css'
-	])
+	]);
+    mix.version(['css/all.css', 'js/all.js']);
 });

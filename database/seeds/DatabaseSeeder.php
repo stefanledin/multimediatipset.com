@@ -5,6 +5,8 @@ use Illuminate\Database\Eloquent\Model;
 use App\Game;
 use App\Prediction;
 use App\User;
+use App\Question;
+use App\Answer;
 
 class DatabaseSeeder extends Seeder {
 
@@ -43,24 +45,44 @@ class UserTableSeeder extends Seeder {
 class GameTableSeeder extends Seeder {
 	public function run()
 	{
-        $user = User::create([
-            'uid' => '12345',
-            'username' => 'User 1',
-            'first_name' => 'John',
-            'last_name' => 'Doe',
-            'profile_picture_thumbnail' => 'http://lorempixum.com/100/100',
-            'profile_picture' => 'http://lorempixum.com/500/500',
-            'is_admin' => false
-        ]);
+        $user1 = factory(User::class)->create();
+        $user2 = factory(User::class)->create();
         $game = Game::create([
-            'name' => 'SHL Grundserie',
-            'price' => 50,
-            'status' => 'open',
-            'game_type' => 'LeagueTable',
-            'game_data' => serialize(['Färjestad', 'HV71', 'Frölunda', 'Linköping', 'Skellefteå'])
+            'name' => 'Fotbolls-EM: Grupp A',
+            'price' => 20,
+            'status' => 'open'
         ]);
-        $prediction = new Prediction(['prediction' => serialize(['Färjestad', 'Skellefteå', 'Frölunda', 'Linköping', 'HV71'])]);
-        $game->predictions()->save($prediction);
-        $user->predictions()->save($prediction);
+        $question1 = new Question([
+            'title' => 'Frankrike - Rumänien',
+            'worth' => 5,
+            'answer' => '2-1',
+            'type' => 'Score'
+        ]);
+        $question2 = new Question([
+            'title' => 'Albanien - Schweiz',
+            'worth' => 1,
+            'answer' => '0-1',
+            'type' => 'Score'
+        ]);
+        $question3 = new Question([
+            'title' => 'Rumänien - Schweiz',
+            'worth' => 1,
+            'type' => 'Score'
+        ]);
+        $game->questions()->saveMany([$question1, $question2, $question3]);
+        
+        $user1_question1_answer = new Answer(['answer' => '2 - 1']);
+        $user1_question2_answer = new Answer(['answer' => '1 - 0']);
+        $user1_question3_answer = new Answer(['answer' => '1 - 0']);
+        $user1->answers()->saveMany([$user1_question1_answer, $user1_question2_answer, $user1_question3_answer]);
+
+        $user2_question1_answer = new Answer(['answer' => '2-0']);
+        $user2_question2_answer = new Answer(['answer' => '0-1']);
+        $user2_question3_answer = new Answer(['answer' => '0-1']);
+        $user2->answers()->saveMany([$user2_question1_answer, $user2_question2_answer, $user2_question3_answer]);
+
+        $question1->answers()->saveMany([$user1_question1_answer, $user2_question1_answer]);
+        $question2->answers()->saveMany([$user1_question2_answer, $user2_question2_answer]);
+        $question3->answers()->saveMany([$user1_question3_answer, $user2_question3_answer]);
 	}
 }

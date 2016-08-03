@@ -4,13 +4,13 @@
 		<meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Multimediatipset.com™</title>
-		<link rel="stylesheet" href="/css/all.css">
+		<link rel="stylesheet" href="{{ elixir('css/all.css') }}">
 		<link async href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	</head>
 	<body>
 		<nav>
 			<div class="nav-wrapper indigo lighten-1">
-				<a href="{{ route('home') }}" class="brand-logo center">multimediatipset.com ™</a>
+				<a href="{{ route('home') }}" class="brand-logo">Multimediatipset™</a>
 				<ul id="nav-mobile" class="right">
 					@if (!Auth::check())
 						<li><a href="/login">Logga in</a></li>
@@ -25,7 +25,7 @@
 		@section('content')
 		@show
 
-		<script type="text/javascript" src="/js/all.js"></script>
+		<script type="text/javascript" src="{{ elixir('js/all.js') }}"></script>
 
 		@if(App::environment() != 'local')
 		<script>
