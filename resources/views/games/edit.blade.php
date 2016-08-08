@@ -8,45 +8,70 @@
                     <div>
                         <a href="{{ route('home') }}" class="btn grey darken-2"><i class="mdi-hardware-keyboard-arrow-left left"></i>Tillbaka</a>
                     </div>
-                    <span class="card-title">Redigera tips</span>
                     <div class="row">
-                        <form action="{{ route('games.update', $game) }}" method="post">
-                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                            
-                            <label for="name">Namn</label>
-                            <input type="text" id="name" name="name" value="{{ $game->name }}">
 
-                            <label for="price">Pris</label>
-                            <input type="number" id="price" name="price" value="{{ $game->price }}">
-
-                            <input type="submit" value="Spara">
-                        </form>
+                        <div class="card">
+                            <div class="card-content">
+                                <span class="card-title">Redigera tips</span>
+                                <form action="{{ route('games.update', $game) }}" method="post">
+                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                    
+                                    <div class="input-field">
+                                        <input type="text" id="name" name="name" value="{{ $game->name }}">
+                                        <label for="name">Namn</label>
+                                    </div>
+                                
+                                    <div class="input-field">
+                                        <input type="number" id="price" name="price" value="{{ $game->price }}">
+                                        <label for="price">Pris</label>
+                                    </div>
+                                
+                                    <input type="submit" value="Spara" class="btn green">
+                                </form>
+                            </div>
+                        </div>
 
                         @if($game->questions)
-                        <h2>Frågor</h2>
-                            @foreach($game->questions as $question)
-                                {{ $question->title }} <a href="{{ route('admin.questions.edit', $question->id) }}">Redigera</a>
-                                Värd: {{ $question->worth }} poäng
-                                Typ: {{ $question->type }}
-                            @endforeach
+                            <ul class="collection with-header">
+                                <li class="collection-header">
+                                    <strong>Frågor</strong>
+                                </li>
+                                @foreach($game->questions as $question)
+                                    <li class="collection-item">
+                                        {{ $question->title }}<br>
+                                        Värd: {{ $question->worth }} poäng<br>
+                                        Typ: {{ $question->type }}
+                                        <span class="badge">
+                                            <a href="{{ route('admin.questions.edit', $question->id) }}">Redigera</a>
+                                        </span>
+                                    </li>
+                                @endforeach
+                            </ul>
                         @endif
 
-                        <h2>Lägg till fråga</h2>
+                        <h3>Lägg till fråga</h3>
                         <form action="{{ route('admin.questions.store') }}" method="POST">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                             <input type="hidden" name="game_id" value="{{ $game->id }}">
                             
                             <div class="input-field col s12">
-                                <label for="question_type">Välj typ av tips:</label>
-                                <select name="type" id="question_type" class="browser-default">
+                                <select name="type" id="question_type">
                                     <option value="Score">Resultat/poäng</option>
                                 </select>
+                                <label>Välj typ av tips:</label>
                             </div>
                             
-                            <input type="text" name="title">
-                            <input type="number" name="worth">
+                            <div class="input-field col s12">
+                                <input type="text" name="title" id="title">
+                                <label for="title">Namn</label>
+                            </div>
+                            
+                            <div class="input-field col s12">
+                                <input type="number" name="worth" id="worth">
+                                <label for="worth">Värde</label>
+                            </div>
 
-                            <input type="submit" value="Lägg till">
+                            <input type="submit" value="Lägg till" class="btn green">
                         </form>
                     </div>
                 </div>

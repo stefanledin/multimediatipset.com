@@ -20,7 +20,7 @@ elixir(function(mix) {
     	'app.js'
 	])
 	.styles([
-		'materialize.min.css',
+		'materialize.css',
         'admin.css',
         'app.css'
 	]);

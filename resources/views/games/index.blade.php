@@ -2,7 +2,7 @@
 
 @section('content')
 	<div class="row">
-		<div class="col s12 m6 offset-m3">
+		<div class="col s12 m8 offset-m2">
 			<div class="card orange darken-3">
 				<div class="card-content">
 					

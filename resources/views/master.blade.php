@@ -5,20 +5,22 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Multimediatipset.com™</title>
 		<link rel="stylesheet" href="{{ elixir('css/all.css') }}">
-		<link async href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	</head>
 	<body>
-		<nav>
-			<div class="nav-wrapper indigo lighten-1">
-				<a href="{{ route('home') }}" class="brand-logo">Multimediatipset™</a>
-				<ul id="nav-mobile" class="right">
-					@if (!Auth::check())
-						<li><a href="/login">Logga in</a></li>
-					@else 
-						<li><a href="/users/{{ Auth::user()->id }}">{{ Auth::user()->username }}</a></li>
-						<li><a href="{{ route('logout') }}">Logga ut</a></li>
-					@endif
-				</ul>
+		<nav class="row">
+			<div class="nav-wrapper indigo darken-1">
+				<div class="col s12">
+					<a href="{{ route('home') }}" class="brand-logo">Multimediatipset™</a>
+					<ul id="nav-mobile" class="right">
+						@if (!Auth::check())
+							<li><a href="/login">Logga in</a></li>
+						@else 
+							<li><a href="/users/{{ Auth::user()->id }}">{{ Auth::user()->username }}</a></li>
+							<li><a href="{{ route('logout') }}">Logga ut</a></li>
+						@endif
+					</ul>
+				</div>
 			</div>
 		</nav>
 
