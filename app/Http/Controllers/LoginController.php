@@ -36,7 +36,7 @@ class LoginController extends Controller {
                 new RegisterUser($facebookUser)
             );
         }
-        return redirect(route('home'));
+        return back();
     }
 
     public function logout()

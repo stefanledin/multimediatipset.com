@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Answer;
 use App\Question;
 use \Auth;
+use App\Http\Requests\StoreAnswerRequest;
 
 class AnswersController extends Controller
 {
@@ -39,10 +40,9 @@ class AnswersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreAnswerRequest $request)
     {
         $user = Auth::user();
-        
         $answers = $request->input('answer');
         foreach ($answers as $questionID => $answer) {
             $answer = new Answer([
@@ -52,6 +52,7 @@ class AnswersController extends Controller
             $question->answers()->save($answer);
             $user->answers()->save($answer);
         }
+
         return redirect(route('games.show', $request->input('game_id')));
     }
 

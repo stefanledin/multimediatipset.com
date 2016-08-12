@@ -5,32 +5,42 @@
 		<div class="col s12 m8 offset-m2">
 			<div class="card orange darken-3">
 				<div class="card-content">
-					
-					@if(count($active_games))
-					<span class="card-title">Aktuella tips</span>
 					<div class="collection with-header">
-						@foreach($active_games as $game)
-							<a href="games/{{ $game->id }}" class="orange-text collection-item">
-								{{ $game->name }}
-								<span class="badge">{{ count($game->predictions) }} tips</span>
-							</a>
-						@endforeach
+						<div class="collection-header">
+							<span class="card-title">Aktuella tips</span>
+						</div>
+						@if(count($active_games))
+							@foreach($active_games as $game)
+								<a href="games/{{ $game->id }}" class="collection-item orange-text">
+									{{ $game->name }}
+									<span class="badge">{{ count($game->predictions) }} tips</span>
+								</a>
+							@endforeach
+						@else
+							<div class="collection-item">
+								<span>Inga pågående tips</span>
+							</div>
+						@endif
 					</div>
-					@else
-					<span class="card-title">Inga pågående tips</span>
-					@endif
-					<br>
 					
 					@if(count($finished_games))
-					<span class="card-title">Avslutade tips</span>
-					<div class="collection with-header">
-						@foreach($finished_games as $game)
-							<a href="games/{{ $game->id }}" class="orange-text collection-item">
-								{{ $game->name }}
-								<span class="badge">{{ count($game->predictions) }} tips</span>
-							</a>
-						@endforeach
-					</div>
+						<div class="collection with-header">
+							<div class="collection-header">
+								<span class="card-title">Avslutade tips</span>
+							</div>
+							@if(count($finished_games))
+								@foreach($finished_games as $game)
+									<a href="games/{{ $game->id }}" class="collection-item orange-text">
+										{{ $game->name }}
+										<span class="badge">{{ count($game->predictions) }} tips</span>
+									</a>
+								@endforeach
+							@else
+								<div class="collection-item">
+									<span>Inga pågående tips</span>
+								</div>
+							@endif
+						</div>
 					@endif
 
 					@if (Auth::check() && Auth::user()->is_admin)

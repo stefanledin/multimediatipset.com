@@ -34,15 +34,15 @@ class ScorePredictionTest extends TestCase
             ->select('Score', 'type')
             ->press('Lägg till')
             // Sparades det?
-            ->see('Frågor')
+            ->see('Redigera fråga: Resultat')
             ->see('Resultat')
-            ->see('Värd: 1 poäng')
-            ->see('Typ: Score')
+            ->see('value="1"')
+            ->see('Score')
             // Uppdatera
-            ->click('Redigera')
             ->type('5', 'worth')
             ->press('Uppdatera')
-            ->see('Värd: 5 poäng');
+            ->dontSee('value="1"')
+            ->see('value="5"');
     }
 
     public function test_admin_can_create_game_type_score_with_multiple_questions()
@@ -62,12 +62,15 @@ class ScorePredictionTest extends TestCase
             ->see('Välj typ av tips')
             ->select('Score', 'type')
             ->press('Lägg till')
+            ->click('Tillbaka')
+
             // Lägg till och spara fråga
             ->type('Belgien - Italien', 'title')
             ->type('1', 'worth')
             ->see('Välj typ av tips')
             ->select('Score', 'type')
             ->press('Lägg till')
+            ->click('Tillbaka')
             
             // Sparades det?
             ->see('Frågor')
@@ -112,10 +115,10 @@ class ScorePredictionTest extends TestCase
             ->type('2-1', 'answer['.$question1->id.']')
             ->type('0-1', 'answer['.$question2->id.']')
             ->press('Tippa')
-            ->see('Stefan har tippat: 0-2')
-            ->see('Stefan har tippat: 2-0')
-            ->see('CreamDiePie har tippat: 2-1')
-            ->see('CreamDiePie har tippat: 0-1');
+            ->see('Stefan har tippat: <span class="badge">0-2</span>')
+            ->see('Stefan har tippat: <span class="badge">2-0</span>')
+            ->see('CreamDiePie har tippat: <span class="badge">2-1</span>')
+            ->see('CreamDiePie har tippat: <span class="badge">0-1</span>');
     }
 
     public function test_admin_can_insert_the_correct_answer_to_a_question()
@@ -146,6 +149,67 @@ class ScorePredictionTest extends TestCase
             ->click('Redigera')
             ->type('2-0', 'answer')
             ->press('Uppdatera');
+    }
+
+    public function test_user_cant_submit_without_prediction()
+    {
+        $user = factory(App\User::class)->create(['is_admin' => false]);
+        $game = Game::create([
+            'name' => 'Fotbolls-EM: Grupp B',
+            'price' => 40
+        ]);
+        $question1 = new Question([
+            'title' => 'Wales - Slovakien',
+            'worth' => 1,
+            'type' => 'Score'
+        ]);
+        $question2 = new Question([
+            'title' => 'England - Ryssland',
+            'worth' => 1,
+            'type' => 'Score'
+        ]);
+        $game->questions()->saveMany([$question1, $question2]);
+
+        $this->actingAs($user)
+            ->visit('/')
+            ->click('Fotbolls-EM: Grupp B')
+            ->type('2-1', 'answer['.$question1->id.']')
+            ->press('Tippa')
+            ->seePageIs('games/'.$game->id)
+            ->see('2-1')
+            ->see('Tipset för '.$question2->title.' saknas');
+    }
+
+    public function test_admin_can_delete_questions_and_answers_will_auto_delete()
+    {
+        $admin = factory(App\User::class)->create(['is_admin' => true]);
+        $user = factory(App\User::class)->create(['is_admin' => false]);
+        $game = Game::create([
+            'name' => 'Fotbolls-EM: Grupp C',
+            'price' => 40
+        ]);
+        $question1 = new Question([
+            'title' => 'Polen - Nordirland',
+            'worth' => 1,
+            'type' => 'Score'
+        ]);
+        $question2 = new Question([
+            'title' => 'Tyskland - Ukraina',
+            'worth' => 1,
+            'type' => 'Score'
+        ]);
+        $answer = new Answer([
+            'answer' => '2-0'
+        ]);
+        $question2->answers()->save($answer);
+        $user->answers()->save($answer);
+        $game->questions()->saveMany([$question1, $question2]);
+        
+        $this->actingAs($admin)
+            ->visit('admin/questions/'.$question2->id.'/edit')
+            ->see('Tyskland - Ukraina')
+            ->press('Radera')
+            ->seePageIs('admin/game/'.$game->id);
     }
 
     public function test_game_has_leaderboard()

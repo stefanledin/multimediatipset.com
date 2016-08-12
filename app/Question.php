@@ -18,6 +18,34 @@ class Question extends Model
         return $this->hasMany('App\Answer');
     }
 
+    /**
+     * Mutators för Alternatives
+     */
+    public function getAlternativesAttribute($value)
+    {
+        if ($this->attributes['alternatives']) {
+            return unserialize($this->attributes['alternatives']);
+        }
+        // En tom array som standard
+        return [''];
+    }
+    public function setAlternativesAttribute($value)
+    {
+        $this->attributes['alternatives'] = serialize($value);
+    }
+
+    /**
+     * Mutators för Worth
+     */
+    public function getWorthAttribute()
+    {
+        return unserialize($this->attributes['worth']);
+    }
+    public function setWorthAttribute($value)
+    {
+        $this->attributes['worth'] = serialize($value);
+    }
+
     public function correctAnswers()
     {
         return $this->answers->filter(function($answer) {

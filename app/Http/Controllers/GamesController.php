@@ -11,7 +11,6 @@ use Illuminate\Http\Request;
 class GamesController extends Controller {
 
     protected $gameStatuses = ['open' => 'Öppen', 'closed' => 'Stängd', 'finished' => 'Avslutad'];
-    protected $gameTypes = ['Tabellplaceringar', '1-X-2', 'Resultat'];
 
     public function __construct()
     {
@@ -80,7 +79,8 @@ class GamesController extends Controller {
     public function edit($id)
     {
         $game = Game::find($id);
-        return view('games.edit', compact('game'));
+        $gameTypes = $this->gameTypes;
+        return view('games.edit', compact('game', 'gameTypes'));
     }
 
     /**

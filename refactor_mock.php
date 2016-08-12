@@ -119,7 +119,6 @@ Question::create([
             '12' => 10
         ]
     ],
-    'worth' => 5,
     'answer' => 0,
     'game_id' => 1,
 ]);

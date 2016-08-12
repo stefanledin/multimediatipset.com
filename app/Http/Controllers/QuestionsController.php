@@ -47,7 +47,7 @@ class QuestionsController extends Controller
         ]);
         $game = Game::find($request->input('game_id'));
         $game->questions()->save($question);
-        return redirect(route('admin.games.edit', $request->input('game_id')));
+        return redirect(route('admin.questions.edit', $question->id));
     }
 
     /**
@@ -70,7 +70,8 @@ class QuestionsController extends Controller
     public function edit($id)
     {
         $question = Question::find($id);
-        return view('questions.edit', compact('question'));
+        $gameTypes = $this->gameTypes;
+        return view('questions.edit', compact('question', 'gameTypes'));
     }
 
     /**
@@ -84,11 +85,12 @@ class QuestionsController extends Controller
     {
         $question = Question::find($id);
         $question->title = $request->input('title');
+        $question->alternatives = $request->input('alternative');
         $question->worth = $request->input('worth');
         $question->type = $request->input('type');
         $question->save();
         $game = Game::find($question->game_id);
-        return redirect(route('admin.games.edit', $game->id));
+        return redirect(route('admin.questions.edit', $question->id));
     }
 
     /**
@@ -99,6 +101,8 @@ class QuestionsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $question = Question::find($id);
+        $question->delete();
+        return redirect(route('admin.games.edit', $question->game->id));
     }
 }
