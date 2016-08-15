@@ -31,6 +31,9 @@ class Question extends Model
     }
     public function setAlternativesAttribute($value)
     {
+        $value = collect($value)->reject(function($row) {
+            return empty($row);
+        })->toArray();
         $this->attributes['alternatives'] = serialize($value);
     }
 

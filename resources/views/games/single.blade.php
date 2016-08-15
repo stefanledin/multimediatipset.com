@@ -29,7 +29,7 @@
                         <div class="card">
                             <div class="card-content">
                                 <span class="card-title">Lägg till tips</span>
-                                @if(count($errors) > 0)
+                                @if($errors->any())
                                     <div class="card-panel red white-text">
                                         <ul>
                                         @foreach($errors->all() as $error)
@@ -39,20 +39,14 @@
                                     </div>
                                 @endif
                                 @if($game->questions)
-                                    <div class="row">
-                                        <form action="{{ route('answers.store') }}" method="POST">
-                                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                            <input type="hidden" name="game_id" value="{{ $game->id }}">
-                                            @foreach($game->questions as $index => $question)
-                                                <div class="input-field">
-                                                    <input type="hidden" name="question_id" value="{{ $question->id }}">
-                                                    <input type="text" id="answer[{{$question->id}}]" name="answer[{{$question->id}}]" value="{{ old('answer')[$question->id] }}">
-                                                    <label for="answer[{{$question->id}}]">{{ $question->title }}</label>
-                                                </div>
-                                            @endforeach
-                                            <input type="submit" class="btn green" value="Tippa">
-                                        </form>
-                                    </div>
+                                    <form action="{{ route('answers.store') }}" method="POST">
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                        <input type="hidden" name="game_id" value="{{ $game->id }}">
+                                        @foreach($game->questions as $index => $question)
+                                            @include('questions.types.'.$question->type.'.add')
+                                        @endforeach
+                                        <input type="submit" class="btn green" value="Tippa">
+                                    </form>
                                 @endif
                             </div>
                         </div>
@@ -62,25 +56,29 @@
                             <div class="card-content">
                                 <span class="card-title">Tips</span>
                                 @foreach($game->questions as $question)
-                                    @if(!empty($question->answers))
-                                        <ul class="collection with-header"> 
-                                            <li class="collection-header">
-                                                <strong>{{ $question->title }}</strong>
-                                            </li>
-                                            @foreach($question->answers as $answer)
-                                                <li class="collection-item"> 
-                                                    @if($question->answer != '')
-                                                        @if($answer->isCorrect())
-                                                            <i class="tiny left material-icons green-text">check</i>
-                                                        @else
-                                                            <i class="tiny left material-icons red-text">clear</i>
-                                                        @endif
+                                    <ul class="collection with-header"> 
+                                        <li class="collection-header">
+                                            <strong>{{ $question->title }}</strong>
+                                        </li>
+                                        @if(count($question->answers))
+                                        @foreach($question->answers as $answer)
+                                            <li class="collection-item"> 
+                                                @if($question->answer != '')
+                                                    @if($answer->isCorrect())
+                                                        <i class="tiny left material-icons green-text">check</i>
+                                                    @else
+                                                        <i class="tiny left material-icons red-text">clear</i>
                                                     @endif
-                                                    {{ $answer->user->username }} har tippat: <span class="badge">{{ $answer->answer }}</span>
-                                                </li>
-                                            @endforeach
-                                        </ul>
-                                    @endif
+                                                @endif
+                                                {{ $answer->user->username }} har tippat: <span class="badge">{{ $answer->answer }}</span>
+                                            </li>
+                                        @endforeach
+                                        @else
+                                            <li class="collection-item">
+                                                <span>Inga tips ännu.</span>
+                                            </li>
+                                        @endif
+                                    </ul>
                                 @endforeach
                             </div>
                         </div>

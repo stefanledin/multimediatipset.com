@@ -4,15 +4,14 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
+use App\Game;
+use App\Question;
+use App\Answer;
+
 class OrderPredictionTest extends TestCase
 {
     use DatabaseTransactions;
 
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
     public function test_admin_can_create_game_type_order()
     {
         $admin = factory(App\User::class)->make(['is_admin' => true]);
@@ -34,6 +33,7 @@ class OrderPredictionTest extends TestCase
             ->press('Uppdatera')
             ->see('Färjestad')
             ->type('Frölunda', 'alternative[1]')
+            ->press('Uppdatera')
             ->type('Skellefteå', 'alternative[2]')
             ->press('Uppdatera')
             ->see('Färjestad')
@@ -50,5 +50,25 @@ class OrderPredictionTest extends TestCase
             ->see('"worth[alternatives][F&auml;rjestad]" value="10"')
             ->see('"worth[positions][1]" value="20"')
             ;
+    }
+
+    public function test_user_can_add_prediction()
+    {
+        $user = factory(App\User::class)->make(['is_admin' => false]);
+        $game = Game::create([
+            'name' => 'Premier League 2016'
+        ]);
+        $question = new Question([
+            'title' => 'Sluttabell',
+            'type' => 'Order',
+            'alternatives' => [
+                'Arsenal', 'Chelsea', 'Liverpool', 'Manchester City', 'Manchester United'
+            ]
+        ]);
+        $game->questions()->save($question);
+        $this->actingAs($user)
+            ->visit('games/'.$game->id)
+            ->see('Sluttabell')
+            ->press('Tippa');
     }
 }

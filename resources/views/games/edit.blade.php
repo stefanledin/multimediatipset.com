@@ -37,20 +37,12 @@
                             <span class="card-title">Frågor</span>
                             @if(count($game->questions))
                                 @foreach($game->questions as $question)
-                                <ul class="collection with-header">
-                                    <li class="collection-header">
-                                        <strong>{{ $question->title }}</strong>
-                                        <span class="badge">
-                                            <a href="{{ route('admin.questions.edit', $question->id) }}">Redigera</a>
-                                        </span>
-                                    </li>
-                                    <li class="collection-item">
-                                        Värd: {{ $question->worth }} poäng<br>
-                                        Typ: {{ $question->type }}
-                                    </li>
-                                </ul>
+
+                                    @include('questions.types.'.$question->type.'.list')
+
                                 @endforeach
                             @else
+                                <br>
                                 <span>Inga frågor tillagda</span>
                             @endif
                         </div>
