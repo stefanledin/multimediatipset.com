@@ -40,9 +40,32 @@ class AnswersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreAnswerRequest $request)
+    public function store(Request $request)
     {
+        // new AnswerValidator
+        // new StoreAnswer( $request->input('all') );
+        $validation = new AnswerValidator($request->input('question_type'));
+        $validation->rules
+        $validation->messages
+        $this->validate($request, $validation->rules, $validation->messages);
+
+        if ($request->get('question_type') == 'Score') :
+            $rules = [];
+            foreach ($request->get('answer') as $questionID => $value) {
+                $rules['answer.'.$questionID] = 'required';
+            }
+            $messages = [];
+            foreach ($request->get('answer') as $questionID => $value) {
+                $question = Question::find($questionID);
+                $messages['answer.'.$questionID.'.required'] = 'Tipset för '.$question->title.' saknas';
+            }
+            $this->validate($request, $rules, $messages);
+        else :
+            $question = Question::find($request->get('question_id'));
+        endif;
+
         $user = Auth::user();
+        
         $answers = $request->input('answer');
         foreach ($answers as $questionID => $answer) {
             $answer = new Answer([

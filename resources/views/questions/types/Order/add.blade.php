@@ -1,3 +1,5 @@
+<input type="hidden" name="question_type" value="{{ $question->type }}">
+<input type="hidden" name="question_id" value="{{ $question->id }}">
 <ul class="collection with-header">
     <li class="collection-header">
         <strong>{{ $question->title }}</strong>
@@ -6,7 +8,7 @@
     @foreach($question->alternatives as $index => $alternative)
         <li class="collection-item">
             {{ $index + 1 }}. {{ $alternative }}
-            <input type="hidden" name="answer[{{ $question->id }}][]" value="{{ $alternative }}">
+            <input type="hidden" name="answer[]" value="{{ $alternative }}">
         </li>
     @endforeach
 </ul>
