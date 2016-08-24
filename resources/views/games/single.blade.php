@@ -43,6 +43,7 @@
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <input type="hidden" name="game_id" value="{{ $game->id }}">
                                         @foreach($game->questions as $index => $question)
+                                            <input type="hidden" name="question_type" value="{{ $question->type }}">
                                             @include('questions.types.'.$question->type.'.add')
                                         @endforeach
                                         <input type="submit" class="btn green" value="Tippa">

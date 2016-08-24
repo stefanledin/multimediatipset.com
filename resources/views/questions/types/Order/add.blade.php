@@ -1,4 +1,3 @@
-<input type="hidden" name="question_type" value="{{ $question->type }}">
 <input type="hidden" name="question_id" value="{{ $question->id }}">
 <ul class="collection with-header">
     <li class="collection-header">

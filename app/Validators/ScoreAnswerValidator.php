@@ -1,21 +1,17 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Validators;
 
-use App\Http\Requests\Request;
-use \Auth;
-use App\Question;
+use Illuminate\Http\Request;
+use \App\Question;
 
-class StoreAnswerRequest extends Request
-{
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
+class ScoreAnswerValidator {
+
+    protected $request;
+
+    function __construct(Request $request)
     {
-        return Auth::check();
+        $this->request = $request;
     }
 
     /**
@@ -46,4 +42,5 @@ class StoreAnswerRequest extends Request
         }
         return $messages;   
     }
+
 }
