@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\Commands\StoreAnswer;
+use App\Validators\AnswerValidator;
+
 use App\Answer;
 use App\Question;
 use \Auth;
@@ -41,22 +44,12 @@ class AnswersController extends Controller
      */
     public function store(Request $request)
     {
-        $validation = new \App\Validators\AnswerValidator($request);
+        $validation = new AnswerValidator($request);
         $this->validate($request, $validation->rules, $validation->messages);
 
-        //$this->dispatch(new StoreAnswer)
+        $StoreAnswerType = 'App\Answer\Types\\' . $request->input('question_type');
+        new $StoreAnswerType($request);
         
-        $user = Auth::user();
-        $answers = $request->input('answer');
-        foreach ($answers as $questionID => $answer) {
-            $answer = new Answer([
-                'answer' => str_replace(' ', '', $answer)
-            ]);
-            $question = Question::find($questionID);
-            $question->answers()->save($answer);
-            $user->answers()->save($answer);
-        }
-
         return redirect(route('games.show', $request->input('game_id')));
     }
 

@@ -1,0 +1,28 @@
+<?php
+
+namespace App\Answer\Types;
+
+use App\Answer;
+use App\Question;
+use \Auth;
+
+class Score {
+    
+    public function __construct($request)
+    {
+        $this->store($request->input('answer'));
+    }
+    
+    public function store($answers)
+    {
+        foreach ($answers as $questionID => $answer) {
+            $answer = new Answer([
+                'answer' => str_replace(' ', '', $answer)
+            ]);
+            $question = Question::find($questionID);
+            $question->answers()->save($answer);
+            Auth::user()->answers()->save($answer);
+        }    
+    }
+
+}
