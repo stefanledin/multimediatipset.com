@@ -107,7 +107,7 @@ class ScorePredictionTest extends TestCase
             ->type('0-2', 'answer['.$question1->id.']')
             ->type('2-0', 'answer['.$question2->id.']')
             ->press('Tippa')
-            ->seeInDatabase('answers', ['answer' => '0-2', 'user_id' => $user->id, 'question_id' => $question1->id]);
+            ->seeInDatabase('answers', ['answer' => serialize('0-2'), 'user_id' => $user->id, 'question_id' => $question1->id]);
         
         $this->actingAs($user2)
             ->visit('/')

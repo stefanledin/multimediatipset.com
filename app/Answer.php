@@ -25,6 +25,11 @@ class Answer extends Model
 
     public function setAnswerAttribute($value)
     {
-        $this->attributes['answer'] = str_replace(' ', '', $value);
+        $this->attributes['answer'] = serialize( str_replace(' ', '', $value));
+    }
+
+    public function getAnswerAttribute($value)
+    {
+        return unserialize($value);
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Answer\Types;
+namespace App\Answer\Save\Type;
 
 use App\Answer;
 use App\Question;
@@ -17,7 +17,7 @@ class Score {
     {
         foreach ($answers as $questionID => $answer) {
             $answer = new Answer([
-                'answer' => str_replace(' ', '', $answer)
+                'answer' => $answer
             ]);
             $question = Question::find($questionID);
             $question->answers()->save($answer);

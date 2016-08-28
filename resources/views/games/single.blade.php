@@ -71,7 +71,9 @@
                                                         <i class="tiny left material-icons red-text">clear</i>
                                                     @endif
                                                 @endif
-                                                {{ $answer->user->username }} har tippat: <span class="badge">{{ $answer->answer }}</span>
+
+                                                @include('answers.types.'.$question->type.'.list')
+                                                
                                             </li>
                                         @endforeach
                                         @else

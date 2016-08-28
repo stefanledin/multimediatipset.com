@@ -47,7 +47,7 @@ class AnswersController extends Controller
         $validation = new AnswerValidator($request);
         $this->validate($request, $validation->rules, $validation->messages);
 
-        $StoreAnswerType = 'App\Answer\Types\\' . $request->input('question_type');
+        $StoreAnswerType = 'App\Answer\Save\Type\\' . $request->input('question_type');
         new $StoreAnswerType($request);
         
         return redirect(route('games.show', $request->input('game_id')));

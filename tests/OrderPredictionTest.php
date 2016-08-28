@@ -54,7 +54,7 @@ class OrderPredictionTest extends TestCase
 
     public function test_user_can_add_prediction()
     {
-        $user = factory(App\User::class)->make(['is_admin' => false]);
+        $user = factory(App\User::class)->create(['is_admin' => false]);
         $game = Game::create([
             'name' => 'Premier League 2016'
         ]);
@@ -69,6 +69,7 @@ class OrderPredictionTest extends TestCase
         $this->actingAs($user)
             ->visit('games/'.$game->id)
             ->see('Sluttabell')
-            ->press('Tippa');
+            ->press('Tippa')
+            ->see($user->username . ' har tippat:');
     }
 }

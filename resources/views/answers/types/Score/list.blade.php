@@ -1,0 +1,1 @@
+{{ $answer->user->username }} har tippat: <span class="badge">{{ $answer->answer }}</span>
