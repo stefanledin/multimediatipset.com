@@ -72,4 +72,10 @@ class OrderPredictionTest extends TestCase
             ->press('Tippa')
             ->see($user->username . ' har tippat:');
     }
+
+    public function test_scoreboard()
+    {
+        
+    }
+
 }

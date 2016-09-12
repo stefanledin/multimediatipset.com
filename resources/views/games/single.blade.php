@@ -44,7 +44,11 @@
                                         <input type="hidden" name="game_id" value="{{ $game->id }}">
                                         @foreach($game->questions as $index => $question)
                                             <input type="hidden" name="question_type" value="{{ $question->type }}">
-                                            @include('questions.types.'.$question->type.'.add')
+                                            <div class="card">
+                                                <div class="card-content">
+                                                    @include('questions.types.'.$question->type.'.add')
+                                                </div>
+                                            </div>
                                         @endforeach
                                         <input type="submit" class="btn green" value="Tippa">
                                     </form>

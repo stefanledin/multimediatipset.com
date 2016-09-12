@@ -18,6 +18,12 @@ class Answer extends Model
         return $this->belongsTo('App\User');
     }
 
+    public function points()
+    {
+        $pointCounter = 'App\Answer\PointCounter\Type\\'. $this->question->type;
+        return (new $pointCounter($this))->count();
+    }
+
     public function isCorrect()
     {
         return $this->answer == $this->question->answer;

@@ -67,10 +67,10 @@ class Question extends Model
     public function leaderBoard()
     {
         $players = $this->answers->sortBy(function ($answer) {
-            return ($answer->isCorrect()) ? 1 : 0;
+            return $answer->points();
         })->reverse()->map(function ($answer)
         {
-            $answer->user->points = ($answer->isCorrect()) ? $this->worth : 0;
+            $answer->user->points = $answer->points();
             $answer->user->isCorrect = $answer->isCorrect();
             return $answer->user;
         });
