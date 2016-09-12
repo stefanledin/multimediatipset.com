@@ -7,6 +7,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Game;
 use App\Question;
 use App\Answer;
+use App\User;
 
 class OrderPredictionTest extends TestCase
 {
@@ -73,9 +74,52 @@ class OrderPredictionTest extends TestCase
             ->see($user->username . ' har tippat:');
     }
 
-    public function test_scoreboard()
+    public function test_leaderboard()
     {
+        $user1 = factory(User::class)->create();
+        $user2 = factory(User::class)->create();
+        $game = Game::create([
+            'name' => 'World Cup 2016'
+        ]);
+        $question = new Question([
+            'title' => 'Grupp A',
+            'type' => 'Order',
+            'alternatives' => [
+                'Sverige', 'Ryssland', 'Finland', 'Team Europe'
+            ],
+            'answer' => [
+                'Ryssland', 'Sverige', 'Finland', 'Team Europe'
+            ],
+            'worth' => [
+                'default' => 1,
+                'teams' => [
+                    'Sverige' => 5
+                ]
+            ]
+        ]);
+        $game->questions()->save($question);
+
+        $answer1 = new Answer([
+            'answer' => [
+                'Ryssland', 'Sverige', 'Team Europe', 'Finland'
+            ]
+        ]);
+        $question->answers()->save($answer1);
+        $user1->answers()->save($answer1);
         
+        $answer2 = new Answer([
+            'answer' => [
+                'Sverige', 'Ryssland', 'Finland', 'Team Europe'
+            ]
+        ]);
+        $question->answers()->save($answer2);
+        $user2->answers()->save($answer2);
+
+        // $question1
+        $this->assertEquals($user1->username, $question->leaderBoard()->players[0]->username);
+        $this->assertEquals($user2->username, $question->leaderBoard()->players[1]->username);
+        $this->assertEquals(7, $question->leaderBoard()->players[0]->points);
+        $this->assertEquals(2, $question->leaderBoard()->players[1]->points);
     }
 
 }

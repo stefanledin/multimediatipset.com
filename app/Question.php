@@ -49,6 +49,18 @@ class Question extends Model
         $this->attributes['worth'] = serialize($value);
     }
 
+    /**
+     * Mutators för Answer
+     */
+    public function getAnswerAttribute()
+    {
+        return unserialize($this->attributes['answer']);
+    }
+    public function setAnswerAttribute($value)
+    {
+        $this->attributes['answer'] = serialize($value);
+    }
+
     public function correctAnswers()
     {
         return $this->answers->filter(function($answer) {
