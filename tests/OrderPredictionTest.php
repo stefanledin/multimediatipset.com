@@ -81,7 +81,7 @@ class OrderPredictionTest extends TestCase
         $game = Game::create([
             'name' => 'World Cup 2016'
         ]);
-        $question = new Question([
+        $question1 = new Question([
             'title' => 'Grupp A',
             'type' => 'Order',
             'alternatives' => [
@@ -97,29 +97,72 @@ class OrderPredictionTest extends TestCase
                 ]
             ]
         ]);
-        $game->questions()->save($question);
+        $question2 = new Question([
+            'title' => 'Grupp A',
+            'type' => 'Order',
+            'alternatives' => [
+                'Kanada', 'USA', 'Tjeckien', 'Team Nordamerika'
+            ],
+            'answer' => [
+                'Kanada', 'Team Nordamerika', 'USA', 'Tjeckien'
+            ],
+            'worth' => [
+                'default' => 1,
+                'positions' => [
+                    '1' => 5
+                ]
+            ]
+        ]);
+        $game->questions()->saveMany([$question1, $question2]);
 
-        $answer1 = new Answer([
+        $question1_answer1 = new Answer([
             'answer' => [
                 'Ryssland', 'Sverige', 'Team Europe', 'Finland'
             ]
         ]);
-        $question->answers()->save($answer1);
-        $user1->answers()->save($answer1);
+        $question2_answer1 = new Answer([
+            'answer' => [
+                'Kanada', 'Team Nordamerika', 'USA', 'Tjeckien'
+            ]
+        ]);
+        $question1->answers()->save($question1_answer1);
+        $question2->answers()->save($question2_answer1);
+        $user1->answers()->saveMany([$question1_answer1, $question2_answer1]);
         
-        $answer2 = new Answer([
+        $question1_answer2 = new Answer([
             'answer' => [
                 'Sverige', 'Ryssland', 'Finland', 'Team Europe'
             ]
         ]);
-        $question->answers()->save($answer2);
-        $user2->answers()->save($answer2);
+        $question2_answer2 = new Answer([
+            'answer' => [
+                'USA', 'Kanada', 'Team Nordamerika', 'Tjeckien'
+            ]
+        ]);
+        $question1->answers()->save($question1_answer2);
+        $question2->answers()->save($question2_answer2);
+        $user2->answers()->saveMany([$question1_answer2, $question2_answer2]);
 
         // $question1
-        $this->assertEquals($user1->username, $question->leaderBoard()->players[0]->username);
-        $this->assertEquals($user2->username, $question->leaderBoard()->players[1]->username);
-        $this->assertEquals(7, $question->leaderBoard()->players[0]->points);
-        $this->assertEquals(2, $question->leaderBoard()->players[1]->points);
+        $this->assertEquals(7, $question1_answer1->points());
+        $this->assertEquals(2, $question1_answer2->points());
+        $this->assertEquals($user1->username, $question1->leaderBoard()->players[0]->username);
+        $this->assertEquals($user2->username, $question1->leaderBoard()->players[1]->username);
+        $this->assertEquals(7, $question1->leaderBoard()->players[0]->points);
+        $this->assertEquals(2, $question1->leaderBoard()->players[1]->points);
+
+        // $question2
+        $this->assertEquals(9, $question2_answer1->points());
+        $this->assertEquals(1, $question2_answer2->points());
+        $this->assertEquals($user1->username, $question2->leaderBoard()->players[0]->username);
+        $this->assertEquals($user2->username, $question2->leaderBoard()->players[1]->username);
+        $this->assertEquals(9, $question2->leaderBoard()->players[0]->points);
+        $this->assertEquals(1, $question2->leaderBoard()->players[1]->points);
+
+        // $game
+        $this->assertEquals(2, count($game->questionsWithAnswers()));
+        $this->assertEquals(16, $game->leaderBoard()->players[0]->points);
+        $this->assertEquals(3, $game->leaderBoard()->players[1]->points);
     }
 
 }

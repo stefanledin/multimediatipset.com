@@ -17,7 +17,7 @@ class Score {
     {
         foreach ($answers as $questionID => $answer) {
             $answer = new Answer([
-                'answer' => $answer
+                'answer' => str_replace(' ', '', $answer)
             ]);
             $question = Question::find($questionID);
             $question->answers()->save($answer);
