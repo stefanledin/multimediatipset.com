@@ -29,19 +29,16 @@ class ScorePredictionTest extends TestCase
             
             // Lägg till och spara fråga
             ->type('Resultat', 'title')
-            ->type('1', 'worth')
             ->see('Välj typ av tips')
             ->select('Score', 'type')
             ->press('Lägg till')
             // Sparades det?
             ->see('Redigera fråga: Resultat')
             ->see('Resultat')
-            ->see('value="1"')
             ->see('Score')
             // Uppdatera
             ->type('5', 'worth')
             ->press('Uppdatera')
-            ->dontSee('value="1"')
             ->see('value="5"');
     }
 
@@ -58,18 +55,22 @@ class ScorePredictionTest extends TestCase
             
             // Lägg till och spara fråga
             ->type('Sverige - Nordirland', 'title')
-            ->type('5', 'worth')
             ->see('Välj typ av tips')
             ->select('Score', 'type')
             ->press('Lägg till')
+            // Uppdatera
+            ->type('5', 'worth')
+            ->press('Uppdatera')
             ->click('Tillbaka')
 
             // Lägg till och spara fråga
             ->type('Belgien - Italien', 'title')
-            ->type('1', 'worth')
             ->see('Välj typ av tips')
             ->select('Score', 'type')
             ->press('Lägg till')
+            // Uppdatera
+            ->type('1', 'worth')
+            ->press('Uppdatera')
             ->click('Tillbaka')
             
             // Sparades det?

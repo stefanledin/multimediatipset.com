@@ -69,11 +69,6 @@
                                     <label for="title">Namn</label>
                                 </div>
                                 
-                                <div class="input-field">
-                                    <input type="number" name="worth" id="worth">
-                                    <label for="worth">Värde</label>
-                                </div>
-
                                 <input type="submit" value="Lägg till" class="btn green">
                             </form>
                         </div>
