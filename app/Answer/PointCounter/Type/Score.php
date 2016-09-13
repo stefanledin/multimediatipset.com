@@ -15,7 +15,7 @@ class Score {
 
     public function count()
     {
-        if ($this->answer->answer == $this->answer->question->answer) {
+        if (str_replace(' ', '', $this->answer->answer) == $this->answer->question->answer) {
             return $this->answer->question->worth;
         }
         return 0;

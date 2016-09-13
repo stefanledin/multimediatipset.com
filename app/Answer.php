@@ -26,7 +26,7 @@ class Answer extends Model
 
     public function isCorrect()
     {
-        return $this->answer == $this->question->answer;
+        return str_replace(' ', '', $this->answer) == $this->question->answer;
     }
 
     public function setAnswerAttribute($value)
