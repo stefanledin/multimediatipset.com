@@ -10,7 +10,8 @@ abstract class Controller extends BaseController {
 
     protected $gameTypes = [
         'Score' => 'Resultat/poäng',
-        'Order' => 'Ordning/placering'
+        'Order' => 'Ordning/placering',
+        'Alternatives' => '1-x-2/Alternativ'
     ];
 
 }
