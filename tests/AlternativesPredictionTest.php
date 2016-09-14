@@ -27,21 +27,13 @@ class AlternativesPredictionTest extends TestCase
             ->see(40)
 
             // Lägg till frågor
-            ->type('Gruppspel', 'title')
+            ->type('Sverige-Ryssland', 'title')
             ->select('Alternatives', 'type')
             ->press('Lägg till')
             // Sparades?
-            ->see('Redigera fråga: Gruppspel')
-            ->see('Alternatives')
-            // Lägg till alternativ
-            ->type('1', 'alternative[0]')
-            ->press('Lägg till')
-            ->type('X', 'alternative[1]')
-            ->press('Lägg till')
-            ->type('2', 'alternative[2]')
-            ->press('Lägg till')
-            // Sparades?
-            ->see('id="alternative[2]"  value="2"');
+            ->see('Redigera fråga: Sverige-Ryssland')
+            ->click('Tillbaka')
+            ->see('Sverige-Ryssland');
     }
 
 }
