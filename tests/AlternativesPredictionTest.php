@@ -36,4 +36,33 @@ class AlternativesPredictionTest extends TestCase
             ->see('Sverige-Ryssland');
     }
 
+    public function test_user_can_make_prediction()
+    {
+        $user = factory(App\User::class)->make(['is_admin' => false]);
+
+        $game = Game::create([
+            'name' => 'World Cup 2016'
+        ]);
+        $question1 = new Question([
+            'title' => 'Sverige-Finland',
+            'type' => 'Alternatives',
+            'worth' => '5'
+        ]);
+        $question2 = new Question([
+            'title' => 'Finland-Ryssland',
+            'type' => 'Alternatives',
+            'worth' => '1'
+        ]);
+        $game->questions()->saveMany([$question1, $question2]);
+
+        $this->actingAs($user)
+            ->visit('/')
+            ->click('World Cup 2016')
+            ->see('Sverige-Finland')
+            ->see('Finland-Ryssland')
+            ->select('1', 'answer['.$question1->id.']')
+            ->select('2', 'answer['.$question2->id.']')
+            ->press('Tippa');
+    }
+
 }

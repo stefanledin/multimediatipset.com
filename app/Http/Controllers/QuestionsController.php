@@ -88,6 +88,7 @@ class QuestionsController extends Controller
         $question->alternatives = $request->input('alternative');
         $question->worth = $request->input('worth');
         $question->type = $request->input('type');
+        $question->answer = $request->input('answer');
         $question->save();
         $game = Game::find($question->game_id);
         return redirect(route('admin.questions.edit', $question->id));
