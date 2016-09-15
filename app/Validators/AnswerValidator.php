@@ -3,24 +3,24 @@
 namespace App\Validators;
 
 use Illuminate\Http\Request;
+use App\Question;
 
 class AnswerValidator
 {
     public $rules;
     public $messages;
 
-    function __construct(Request $request)
+    function __construct(Question $question)
     {
-        $type = $request->input('question_type');
-        $validator = $this->getValidator($type, $request);
+        $validator = $this->getValidator($question);
 
         $this->rules = $validator->rules();
         $this->messages = $validator->messages();
     }
 
-    protected function getValidator($type, Request $request)
+    protected function getValidator(Question $question)
     {
-        $validatorType = 'App\Validators\\'.$type.'AnswerValidator';
-        return new $validatorType($request);
+        $validatorType = 'App\Validators\\'.$question->type.'AnswerValidator';
+        return new $validatorType($question);
     }
 }

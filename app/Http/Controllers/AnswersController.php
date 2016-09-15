@@ -44,11 +44,16 @@ class AnswersController extends Controller
      */
     public function store(Request $request)
     {
-        $validation = new AnswerValidator($request);
-        $this->validate($request, $validation->rules, $validation->messages);
+        foreach ($request->input('answer') as $questionID => $answer) {
+            
+            $question = Question::find($questionID);
+            $validation = new AnswerValidator($question);
+            $this->validate($request, $validation->rules, $validation->messages);
 
-        $StoreAnswerType = 'App\Answer\Save\Type\\' . $request->input('question_type');
-        new $StoreAnswerType($request);
+            $StoreAnswerType = 'App\Answer\Save\Type\\' . $question->type;
+            new $StoreAnswerType($request);
+
+        }
         
         return redirect(route('games.show', $request->input('game_id')));
     }

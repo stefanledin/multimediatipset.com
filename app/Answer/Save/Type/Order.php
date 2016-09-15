@@ -16,12 +16,16 @@ class Order {
 
     public function store(Request $request)
     {
-        $answer = new Answer([
-            'answer' => $request->input('answer')
-        ]);
-        $question = Question::find($request->input('question_id'));
-        $question->answers()->save($answer);
-        Auth::user()->answers()->save($answer);
+        foreach ($request->input('answer') as $question_id => $answer) {
+            
+            $answer = new Answer([
+                'answer' => $answer
+            ]);
+            $question = Question::find($question_id);
+            $question->answers()->save($answer);
+            Auth::user()->answers()->save($answer);
+
+        }
     }
 
 }

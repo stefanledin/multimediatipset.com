@@ -2,15 +2,15 @@
 
 namespace App\Validators;
 
-use Illuminate\Http\Request;
+use App\Question;;
 
 class OrderAnswerValidator {
 
-    protected $request;
+    protected $question;
 
-    public function __construct(Request $request)
+    public function __construct(Question $question)
     {
-        $this->request = $request;
+        $this->question = $question;
     }
 
     public function rules()

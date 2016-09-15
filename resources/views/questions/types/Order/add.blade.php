@@ -7,7 +7,7 @@
     @foreach($question->alternatives as $index => $alternative)
         <li class="collection-item">
             {{ $index + 1 }}. {{ $alternative }}
-            <input type="hidden" name="answer[]" value="{{ $alternative }}">
+            <input type="hidden" name="answer[{{$question->id}}][]" value="{{ $alternative }}">
         </li>
     @endforeach
 </ul>

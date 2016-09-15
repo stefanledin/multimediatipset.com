@@ -7,11 +7,11 @@ use \App\Question;
 
 class ScoreAnswerValidator {
 
-    protected $request;
+    protected $question;
 
-    function __construct(Request $request)
+    function __construct(Question $question)
     {
-        $this->request = $request;
+        $this->question = $question;
     }
 
     /**
@@ -22,9 +22,7 @@ class ScoreAnswerValidator {
     public function rules()
     {
         $rules = [];
-        foreach ($this->request->get('answer') as $questionID => $value) {
-            $rules['answer.'.$questionID] = 'required';
-        }
+        $rules['answer.'.$this->question->id] = 'required';
         return $rules;
     }
 
@@ -36,10 +34,7 @@ class ScoreAnswerValidator {
     public function messages()
     {
         $messages = [];
-        foreach ($this->request->get('answer') as $questionID => $value) {
-            $question = Question::find($questionID);
-            $messages['answer.'.$questionID.'.required'] = 'Tipset för '.$question->title.' saknas';
-        }
+        $messages['answer.'.$this->question->id.'.required'] = 'Tipset för '.$this->question->title.' saknas';
         return $messages;   
     }
 
