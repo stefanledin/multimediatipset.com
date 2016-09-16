@@ -44,7 +44,6 @@ class AnswersController extends Controller
      */
     public function store(Request $request)
     {
-        var_dump($request->input('answer'));
         foreach ($request->input('answer') as $questionID => $answer) {
             $question = Question::find($questionID);
             $validation = new AnswerValidator($question);

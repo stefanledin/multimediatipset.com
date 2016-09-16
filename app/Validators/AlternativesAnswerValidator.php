@@ -22,7 +22,7 @@ class AlternativesAnswerValidator {
     public function rules()
     {
         $rules = [];
-        $rules['answer.'.$this->question->id] = 'required';
+        $rules['answer.'.$this->question->id] = 'required|not_in:-';
         return $rules;
     }
 
@@ -34,7 +34,7 @@ class AlternativesAnswerValidator {
     public function messages()
     {
         $messages = [];
-        $messages['answer.'.$this->question->id.'.required'] = 'Tipset för '.$this->question->title.' saknas';
+        $messages['answer.'.$this->question->id.'.not_in'] = 'Tipset för '.$this->question->title.' saknas';
         return $messages;   
     }
 
