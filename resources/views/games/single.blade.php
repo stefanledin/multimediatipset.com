@@ -39,9 +39,9 @@
                                             <li class="collection-item"> 
                                                 @if($question->answer != '')
                                                     @if($answer->isCorrect())
-                                                        <i class="tiny left material-icons green-text">check</i>
+                                                        <!--<i class="tiny left material-icons green-text">check</i>-->
                                                     @else
-                                                        <i class="tiny left material-icons red-text">clear</i>
+                                                        <!--<i class="tiny left material-icons red-text">clear</i>-->
                                                     @endif
                                                 @endif
 
