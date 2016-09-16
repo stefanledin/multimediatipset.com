@@ -9,23 +9,18 @@ use \Auth;
 
 class Order {
 
-    public function __construct(Request $request)
+    public function __construct($answer, Question $question)
     {
-        $this->store($request);
+        $this->store($answer, $question);
     }
 
-    public function store(Request $request)
+    public function store($answer, Question $question)
     {
-        foreach ($request->input('answer') as $question_id => $answer) {
-            
-            $answer = new Answer([
-                'answer' => $answer
-            ]);
-            $question = Question::find($question_id);
-            $question->answers()->save($answer);
-            Auth::user()->answers()->save($answer);
-
-        }
+        $answer = new Answer([
+            'answer' => $answer
+        ]);
+        $question->answers()->save($answer);
+        Auth::user()->answers()->save($answer);
     }
 
 }

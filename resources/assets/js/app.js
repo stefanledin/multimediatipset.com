@@ -3,7 +3,9 @@
 
 	var multimediatipset = {
 		init: function () {
-			$('ol.sortable').sortable();
+			$('.sortable').sortable({
+				items: 'li.collection-item'
+			});
 			if (document.getElementById('create-game')) {
 				var createGame = new Vue({
 					el: '#create-game',
