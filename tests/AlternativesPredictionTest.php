@@ -38,7 +38,7 @@ class AlternativesPredictionTest extends TestCase
 
     public function test_user_can_make_prediction()
     {
-        $user = factory(App\User::class)->make(['is_admin' => false]);
+        $user = factory(App\User::class)->create(['is_admin' => false]);
 
         $game = Game::create([
             'name' => 'World Cup 2016'
@@ -62,7 +62,36 @@ class AlternativesPredictionTest extends TestCase
             ->see('Finland-Ryssland')
             ->select('1', 'answer['.$question1->id.']')
             ->select('2', 'answer['.$question2->id.']')
-            ->press('Tippa');
+            ->press('Tippa')
+            ->see($user->username. ' har tippat: <span class="badge">1</span>')
+            ->see($user->username. ' har tippat: <span class="badge">2</span>');
+    }
+
+    public function test_user_cant_submit_without_prediction()
+    {
+        $user = factory(App\User::class)->create(['is_admin' => false]);
+
+        $game = Game::create([
+            'name' => 'World Cup träningsmatcher'
+        ]);
+        $question1 = new Question([
+            'title' => 'Finland - Sverige',
+            'type' => 'Alternatives',
+            'worth' => '5'
+        ]);
+        $question2 = new Question([
+            'title' => 'Sverige - Finland',
+            'type' => 'Alternatives',
+            'worth' => '1'
+        ]);
+        $game->questions()->saveMany([$question1, $question2]);
+
+        $this->actingAs($user)
+            ->visit('/')
+            ->click('World Cup träningsmatcher')
+            ->select('2', 'answer['.$question1->id.']')
+            ->press('Tippa')
+            ->see('Tipset för '.$question2->title.' saknas');
     }
 
 }
