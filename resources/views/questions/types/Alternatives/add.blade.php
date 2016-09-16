@@ -3,8 +3,8 @@
     <div class="collection-header"><strong>{{ $question->title }}</strong></div>
     @foreach(['-', '1', 'X', '2'] as $index => $alternative)
         <div class="collection-item">
-            <input type="radio" id="answer{{ $alternative }}" name="answer[{{$question->id}}]" value="{{ $alternative }}" @if($index == 0)checked="checked"@endif>
-            <label for="answer{{ $alternative }}">{{ $alternative }}</label>
+            <input type="radio" id="answer-{{ $question->id }}-{{ $alternative }}" name="answer[{{$question->id}}]" value="{{ $alternative }}" @if($index == 0)checked="checked"@endif>
+            <label for="answer-{{ $question->id }}-{{ $alternative }}">{{ $alternative }}</label>
         </div>
     @endforeach
 </div>
