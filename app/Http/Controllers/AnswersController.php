@@ -50,10 +50,9 @@ class AnswersController extends Controller
             $this->validate($request, $validation->rules, $validation->messages);
 
             $StoreAnswerType = 'App\Answer\Save\Type\\' . $question->type;
-            new $StoreAnswerType($request);
+            new $StoreAnswerType($answer, $question);
 
         }
-        
         return redirect(route('games.show', $request->input('game_id')));
     }
 

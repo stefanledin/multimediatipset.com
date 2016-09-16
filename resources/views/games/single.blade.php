@@ -24,38 +24,7 @@
                             <p>I potten: {{ $game->inPot() }} kr</p>
                         </div>
                     </div>
-                    
-                    @if(Auth::check())
-                        <div class="card">
-                            <div class="card-content">
-                                <span class="card-title">Lägg till tips</span>
-                                @if($errors->any())
-                                    <div class="card-panel red white-text">
-                                        <ul>
-                                        @foreach($errors->all() as $error)
-                                            <li>{{ $error }}</li>
-                                        @endforeach
-                                        </ul>
-                                    </div>
-                                @endif
-                                @if($game->questions)
-                                    <form action="{{ route('answers.store') }}" method="POST">
-                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                        <input type="hidden" name="game_id" value="{{ $game->id }}">
-                                        @foreach($game->questions as $index => $question)
-                                            <input type="hidden" name="question_type" value="{{ $question->type }}">
-                                            <div class="card">
-                                                <div class="card-content">
-                                                    @include('questions.types.'.$question->type.'.add')
-                                                </div>
-                                            </div>
-                                        @endforeach
-                                        <input type="submit" class="btn green" value="Tippa">
-                                    </form>
-                                @endif
-                            </div>
-                        </div>
-                    @endif
+
                     @if($game->questions)
                         <div class="card">
                             <div class="card-content">
@@ -87,6 +56,38 @@
                                         @endif
                                     </ul>
                                 @endforeach
+                            </div>
+                        </div>
+                    @endif
+                    
+                    @if(Auth::check())
+                        <div class="card">
+                            <div class="card-content">
+                                <span class="card-title">Lägg till tips</span>
+                                @if($errors->any())
+                                    <div class="card-panel red white-text">
+                                        <ul>
+                                        @foreach($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
+                                @if($game->questions)
+                                    <form action="{{ route('answers.store') }}" method="POST">
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                        <input type="hidden" name="game_id" value="{{ $game->id }}">
+                                        @foreach($game->questions as $index => $question)
+                                            <input type="hidden" name="question_type" value="{{ $question->type }}">
+                                            <div class="card">
+                                                <div class="card-content">
+                                                    @include('questions.types.'.$question->type.'.add')
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                        <input type="submit" class="btn green" value="Tippa">
+                                    </form>
+                                @endif
                             </div>
                         </div>
                     @endif
