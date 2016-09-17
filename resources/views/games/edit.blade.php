@@ -26,6 +26,15 @@
                                     <input type="number" id="price" name="price" value="{{ $game->price }}">
                                     <label for="price">Pris</label>
                                 </div>
+
+                                <div>
+                                    <label for="status">Status</label>
+                                    <select name="status" id="status" class="browser-default">
+                                        @foreach(['open' => 'Öppen', 'closed' => 'Stängd', 'finished' => 'Avslutad'] as $value => $label)
+                                            <option value="{{ $value }}" @if($game->status == $value) selected="selected" @endif>{{ $label }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             
                                 <input type="submit" value="Spara" class="btn green">
                             </form>

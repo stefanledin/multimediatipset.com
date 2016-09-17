@@ -51,7 +51,8 @@ class GamesController extends Controller {
     {
         $game = Game::create([
             'name' => $request->input('name'),
-            'price' => $request->input('price')
+            'price' => $request->input('price'),
+            'status' => 'open'
         ]);
         if ($game) {
             return redirect()->route('admin.games.edit', $game);
@@ -67,7 +68,8 @@ class GamesController extends Controller {
     public function show($id)
     {
         $game = Game::find($id);
-        return view('games.single', compact('game'));
+        $questions = $game->questions()->where('status', 'open')->get();
+        return view('games.single', compact('game', 'questions'));
     }
 
     /**
@@ -94,6 +96,7 @@ class GamesController extends Controller {
         $game = Game::findOrFail($id);
         $game->name = $request->input('name');
         $game->price = $request->input('price');
+        $game->status = $request->input('status');
 
         $game->save();
         return redirect()->route('games.show', $game->id);

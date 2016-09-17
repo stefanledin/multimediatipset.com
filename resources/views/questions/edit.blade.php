@@ -32,6 +32,15 @@
                                         @endforeach
                                     </select>
                                 </div>
+
+                                <div>
+                                    <label for="question_status">Välj status</label>
+                                    <select name="status" id="question_status" class="browser-default">
+                                        @foreach(['open' => 'Öppen', 'closed' => 'Stängd', 'finished' => 'Avslutad'] as $value => $label)
+                                            <option value="{{ $value }}" @if($question->status == $value) selected="selected" @endif>{{ $label }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                                 
                                 
                                 @include('questions.types.'.$question->type)

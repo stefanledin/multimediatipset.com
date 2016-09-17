@@ -13,7 +13,6 @@
 							@foreach($active_games as $game)
 								<a href="games/{{ $game->id }}" class="collection-item orange-text">
 									{{ $game->name }}
-									<span class="badge">{{ count($game->predictions) }} tips</span>
 								</a>
 							@endforeach
 						@else

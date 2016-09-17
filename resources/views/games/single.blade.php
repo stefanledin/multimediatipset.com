@@ -73,11 +73,11 @@
                                         </ul>
                                     </div>
                                 @endif
-                                @if($game->questions)
+                                @if($questions)
                                     <form action="{{ route('answers.store') }}" method="POST">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <input type="hidden" name="game_id" value="{{ $game->id }}">
-                                        @foreach($game->questions as $index => $question)
+                                        @foreach($questions as $index => $question)
                                             <input type="hidden" name="question_type" value="{{ $question->type }}">
                                             <div class="card">
                                                 <div class="card-content">
