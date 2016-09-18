@@ -7,6 +7,8 @@
     </li>
     <li class="collection-item">
         Värd: {{ $question->worth }} poäng<br>
-        Typ: {{ $question->type }}
+        Typ: {{ $question->type }}<br>
+        Status: {{ $question->status }}<br>
+        Resultat: {{ $question->answer }}
     </li>
 </ul>
