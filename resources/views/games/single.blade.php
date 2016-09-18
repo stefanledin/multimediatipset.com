@@ -63,7 +63,7 @@
                                         @if(count($question->answers))
                                         @foreach($question->answers as $answer)
                                             <li class="collection-item"> 
-                                                @if($question->answer != '')
+                                                @if(($question->answer != '-') && ($question->answer != ''))
                                                     @if($answer->isCorrect())
                                                         <i class="tiny left material-icons green-text">check</i>
                                                     @else
