@@ -1,5 +1,5 @@
 <div class="input-field">
-    <input type="number" name="worth" value="{{ $question->worth }}">
+    <input type="number" id="worth" name="worth" value="{{ $question->worth }}">
     <label for="worth">Värde</label>
 </div>
 @foreach(['-', '1', 'X', '2'] as $alternative)

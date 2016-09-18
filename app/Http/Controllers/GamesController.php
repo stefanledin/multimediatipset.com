@@ -69,7 +69,9 @@ class GamesController extends Controller {
     {
         $game = Game::find($id);
         $questions = $game->questions()->where('status', 'open')->get();
-        return view('games.single', compact('game', 'questions'));
+        $questionsWithAnswers = $game->questionsWithAnswers();
+        $leaderBoard = $game->leaderBoard();
+        return view('games.single', compact('game', 'questions', 'questionsWithAnswers', 'leaderBoard'));
     }
 
     /**

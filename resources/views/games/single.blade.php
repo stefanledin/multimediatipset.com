@@ -25,6 +25,32 @@
                         </div>
                     </div>
 
+                    @if($questionsWithAnswers)
+                        <div class="card">
+                            <div class="card-content">
+                                <span class="card-title">Ställning</span>
+                                <table>
+                                    <thead>
+                                        <th>#</th>
+                                        <th>Namn</th>
+                                        <th>Rätt</th>
+                                        <th>Poäng</th>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($leaderBoard->players as $index => $player)
+                                        <tr>
+                                            <td>{{ $index + 1 }}</td>
+                                            <td>{{ $player->username }}</td>
+                                            <td>{{ $player->correctAnswers }} / {{ count($questionsWithAnswers) }}</td>
+                                            <td>{{ $player->points }}</td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    @endif
+
                     @if($game->questions)
                         <div class="card">
                             <div class="card-content">
@@ -39,9 +65,9 @@
                                             <li class="collection-item"> 
                                                 @if($question->answer != '')
                                                     @if($answer->isCorrect())
-                                                        <!--<i class="tiny left material-icons green-text">check</i>-->
+                                                        <i class="tiny left material-icons green-text">check</i>
                                                     @else
-                                                        <!--<i class="tiny left material-icons red-text">clear</i>-->
+                                                        <i class="tiny left material-icons red-text">clear</i>
                                                     @endif
                                                 @endif
 
