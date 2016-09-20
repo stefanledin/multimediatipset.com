@@ -42,7 +42,7 @@
                                             <td>{{ $index + 1 }}</td>
                                             <td>{{ $player->username }}</td>
                                             <td>{{ $player->correctAnswers }} / {{ count($questionsWithAnswers) }}</td>
-                                            <td>{{ $player->points }}</td>
+                                            <td>{{ $player->points }} / {{ $game->pointsAvaliable() }}</td>
                                         </tr>
                                         @endforeach
                                     </tbody>

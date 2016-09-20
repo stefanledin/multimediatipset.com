@@ -20,7 +20,7 @@ class Game extends Model {
     public function questionsWithAnswers()
     {
         return $this->questions->filter(function($question) {
-            return ($question->answer != '') ? $question : null;
+            return (($question->answer != '') && ($question->answer != '-')) ? $question : null;
         });
     }
 
