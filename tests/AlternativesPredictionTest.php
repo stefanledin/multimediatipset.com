@@ -46,11 +46,13 @@ class AlternativesPredictionTest extends TestCase
         $question1 = new Question([
             'title' => 'Sverige-Finland',
             'type' => 'Alternatives',
+            'status' => 'open',
             'worth' => '5'
         ]);
         $question2 = new Question([
             'title' => 'Finland-Ryssland',
             'type' => 'Alternatives',
+            'status' => 'open',
             'worth' => '1'
         ]);
         $game->questions()->saveMany([$question1, $question2]);
@@ -77,11 +79,13 @@ class AlternativesPredictionTest extends TestCase
         $question1 = new Question([
             'title' => 'Finland - Sverige',
             'type' => 'Alternatives',
+            'status' => 'open',
             'worth' => '5'
         ]);
         $question2 = new Question([
             'title' => 'Sverige - Finland',
             'type' => 'Alternatives',
+            'status' => 'open',
             'worth' => '1'
         ]);
         $game->questions()->saveMany([$question1, $question2]);
@@ -92,6 +96,38 @@ class AlternativesPredictionTest extends TestCase
             ->select('2', 'answer['.$question1->id.']')
             ->press('Tippa')
             ->see('Tipset för '.$question2->title.' saknas');
+    }
+
+    public function test_user_only_sees_unanswered_questions()
+    {
+        $user = factory(User::class)->create();
+        $game = Game::create([
+            'name' => 'OS-fotboll damer',
+            'status' => 'open'
+        ]);
+        $question1 = new Question([
+            'title' => 'Sverige - Brasilien',
+            'type' => 'Alternatives',
+            'status' => 'open',
+            'worth' => 1
+        ]);
+        $question2 = new Question([
+            'title' => 'Tyskland - Sverige',
+            'type' => 'Alternatives',
+            'status' => 'open',
+            'worth' => 5
+        ]);
+        $game->questions()->saveMany([$question1, $question2]);
+        $answer = new Answer([
+            'answer' => '0-0'
+        ]);
+        $question1->answers()->save($answer);
+        $user->answers()->save($answer);
+        $this->actingAs($user)
+            ->visit('games/'.$game->id)
+            ->see('OS-fotboll damer')
+            ->dontSee('id="answer-'.$question1->id.'--"')
+            ->see('id="answer-'.$question2->id.'--"');
     }
 
     public function test_game_has_leaderboard()

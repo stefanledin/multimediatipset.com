@@ -56,18 +56,21 @@ class GameTableSeeder extends Seeder {
             'title' => 'Frankrike - Rumänien',
             'worth' => 5,
             'answer' => '2-1',
-            'type' => 'Score'
+            'type' => 'Score',
+            'status' => 'closed'
         ]);
         $question2 = new Question([
             'title' => 'Albanien - Schweiz',
             'worth' => 1,
             'answer' => '0-1',
-            'type' => 'Score'
+            'type' => 'Score',
+            'status' => 'closed'
         ]);
         $question3 = new Question([
             'title' => 'Rumänien - Schweiz',
             'worth' => 1,
-            'type' => 'Score'
+            'type' => 'Score',
+            'status' => 'open'
         ]);
         $game->questions()->saveMany([$question1, $question2, $question3]);
         

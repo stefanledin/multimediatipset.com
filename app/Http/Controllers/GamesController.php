@@ -3,6 +3,7 @@
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use Auth;
 use App\Game;
 use App\Prediction;
 
@@ -69,6 +70,7 @@ class GamesController extends Controller {
     {
         $game = Game::find($id);
         $questions = $game->questions()->where('status', 'open')->get();
+        // Frågor användaren svarat på i den här frågan
         $questionsWithAnswers = $game->questionsWithAnswers();
         $leaderBoard = $game->leaderBoard();
         return view('games.single', compact('game', 'questions', 'questionsWithAnswers', 'leaderBoard'));
