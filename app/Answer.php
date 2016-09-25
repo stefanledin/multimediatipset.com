@@ -26,7 +26,7 @@ class Answer extends Model
 
     public function isCorrect()
     {
-        return str_replace(' ', '', $this->answer) == $this->question->answer;
+        return (bool) $this->points();
     }
 
     public function setAnswerAttribute($value)

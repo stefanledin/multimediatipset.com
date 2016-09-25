@@ -92,11 +92,13 @@ class ScorePredictionTest extends TestCase
         $question1 = new Question([
             'title' => 'Italien - Spanien',
             'worth' => 1,
+            'status' => 'open',
             'type' => 'Score'
         ]);
         $question2 = new Question([
             'title' => 'England - Island',
             'worth' => 1,
+            'status' => 'open',
             'type' => 'Score'
         ]);
         $game->questions()->saveMany([$question1, $question2]);
@@ -162,11 +164,13 @@ class ScorePredictionTest extends TestCase
         $question1 = new Question([
             'title' => 'Wales - Slovakien',
             'worth' => 1,
+            'status' => 'open',
             'type' => 'Score'
         ]);
         $question2 = new Question([
             'title' => 'England - Ryssland',
             'worth' => 1,
+            'status' => 'open',
             'type' => 'Score'
         ]);
         $game->questions()->saveMany([$question1, $question2]);

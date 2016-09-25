@@ -4,18 +4,86 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+use App\User;
+use Auth;
+
 class Question extends Model
 {
     protected $fillable = ['title', 'alternatives', 'worth', 'type', 'answer', 'game_id', 'status'];
 
+    /**
+     * Relationen mellan Question och Game
+     */ 
     public function game()
     {
         return $this->belongsTo('App\Game');
     }
 
+    /**
+     * Relationen mellan Question och Answer
+     */
     public function answers()
     {
         return $this->hasMany('App\Answer');
+    }
+
+    /**
+     * Returnerar antalet svar ansvändaren gett
+     * på denna frågan
+     * @param  User   $user 
+     * @return integer
+     */
+    public function answeredByUser(User $user)
+    {
+        return $this->answers()->where('user_id', $user->id)->get()->count();
+    }
+
+    /**
+     * Returnerar en collection med användare
+     * som svarat rätt på frågan.
+     * @return collection Collection av User
+     */
+    public function playersWithCorrectAnswers()
+    {
+        return $this->correctAnswers()->map(function ($answer)
+        {
+            return $answer->user;
+        });
+    }
+
+    /**
+     * Returnerar svar som är rätta
+     * @return collection Collection med Answers
+     */
+    public function correctAnswers()
+    {
+        return $this->answers->filter(function($answer) {
+            return $answer->isCorrect();
+        });
+    }
+
+    /*public function worth()
+    {
+        
+    }*/
+
+    /**
+     * Leaderboard
+     * @return object 
+     */
+    public function leaderBoard()
+    {
+        $players = $this->answers->sortBy(function ($answer) {
+            return $answer->points();
+        })->reverse()->map(function ($answer)
+        {
+            $answer->user->points = $answer->points();
+            $answer->user->isCorrect = $answer->isCorrect();
+            return $answer->user;
+        });
+        return (object) [
+            'players' => $players
+        ];
     }
 
     /**
@@ -61,33 +129,4 @@ class Question extends Model
         $this->attributes['answer'] = serialize($value);
     }
 
-    public function correctAnswers()
-    {
-        return $this->answers->filter(function($answer) {
-            return $answer->isCorrect();
-        });
-    }
-
-    public function playersWithCorrectAnswers()
-    {
-        return $this->correctAnswers()->map(function ($answer)
-        {
-            return $answer->user;
-        });
-    }
-
-    public function leaderBoard()
-    {
-        $players = $this->answers->sortBy(function ($answer) {
-            return $answer->points();
-        })->reverse()->map(function ($answer)
-        {
-            $answer->user->points = $answer->points();
-            $answer->user->isCorrect = $answer->isCorrect();
-            return $answer->user;
-        });
-        return (object) [
-            'players' => $players
-        ];
-    }
 }

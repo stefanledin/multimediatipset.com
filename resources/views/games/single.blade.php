@@ -86,7 +86,7 @@
                         </div>
                     @endif
                     
-                    @if(Auth::check())
+                    @if(Auth::check() && count($questions))
                         <div class="card">
                             <div class="card-content">
                                 <span class="card-title">Lägg till tips</span>

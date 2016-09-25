@@ -8,21 +8,18 @@ use \Auth;
 
 class Score {
     
-    public function __construct($request)
+    public function __construct($answer, Question $question)
     {
-        $this->store($request->input('answer'));
+        $this->store($answer, $question);
     }
     
-    public function store($answers)
+    public function store($answer, Question $question)
     {
-        foreach ($answers as $questionID => $answer) {
-            $answer = new Answer([
-                'answer' => str_replace(' ', '', $answer)
-            ]);
-            $question = Question::find($questionID);
-            $question->answers()->save($answer);
-            Auth::user()->answers()->save($answer);
-        }    
+        $answer = new Answer([
+            'answer' => str_replace(' ', '', $answer)
+        ]);
+        $question->answers()->save($answer);
+        Auth::user()->answers()->save($answer);
     }
 
 }

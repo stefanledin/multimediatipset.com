@@ -62,6 +62,7 @@ class OrderPredictionTest extends TestCase
         $question = new Question([
             'title' => 'Sluttabell',
             'type' => 'Order',
+            'status' => 'open',
             'alternatives' => [
                 'Arsenal', 'Chelsea', 'Liverpool', 'Manchester City', 'Manchester United'
             ]
