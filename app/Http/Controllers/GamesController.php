@@ -72,10 +72,12 @@ class GamesController extends Controller {
         // Alla öppna frågor som hör till den här tävlingen
         $questions = $game->questions()
             ->where('status', 'open')
-            ->get()
-            ->filter(function($question) {
+            ->get();
+        if (Auth::check()) {
+            $questions = $questions->filter(function ($question) {
                 return ! $question->answeredByUser(Auth::user());
             });
+        }
         $questionsWithAnswers = $game->questionsWithAnswers();
         $leaderBoard = $game->leaderBoard();
         return view('games.single', compact('game', 'questions', 'questionsWithAnswers', 'leaderBoard'));
