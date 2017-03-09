@@ -93,7 +93,7 @@ class OrderPredictionTest extends TestCase
             ],
             'worth' => [
                 'default' => 1,
-                'teams' => [
+                'alternatives' => [
                     'Sverige' => 5
                 ]
             ]
@@ -162,6 +162,7 @@ class OrderPredictionTest extends TestCase
 
         // $game
         $this->assertEquals(2, count($game->questionsWithAnswers()));
+        $this->assertEquals(18, $game->pointsAvaliable());
         $this->assertEquals(16, $game->leaderBoard()->players[0]->points);
         $this->assertEquals(3, $game->leaderBoard()->players[1]->points);
     }

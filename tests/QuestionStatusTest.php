@@ -39,9 +39,7 @@ class QuestionStatusTest extends TestCase
             ->see('Redigera fråga: Question 1')
             ->select('closed', 'status')
             ->press('Uppdatera')
-            ->visit('games/'.$game->id)
-            ->dontSee('Question 1')
-            ->see('Question 2')
             ;
+        $this->assertEquals('closed', Question::find($question1->id)->status);
     }
 }

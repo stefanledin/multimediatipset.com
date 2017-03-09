@@ -20,7 +20,7 @@ class Order {
 
     public function count()
     {
-        $this->countDefaultWorth()->countTeamPosition()->countCorrectPosition();
+        $this->countDefaultWorth()->countAlternativesPosition()->countCorrectPosition();
         return $this->points;
     }
 
@@ -37,13 +37,13 @@ class Order {
         return $this;
     }
 
-    protected function countTeamPosition()
+    protected function countAlternativesPosition()
     {
         $this->points += collect($this->answer->answer)->map(function ($item, $index)
         {
             if ($item == $this->correct[$index]) {
-                if (isset($this->question->worth['teams'][$item])) {
-                    return $this->question->worth['teams'][$item];
+                if (isset($this->question->worth['alternatives'][$item])) {
+                    return $this->question->worth['alternatives'][$item];
                 }
             }
             return 0; 

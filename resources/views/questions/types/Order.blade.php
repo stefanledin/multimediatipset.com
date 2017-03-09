@@ -76,3 +76,32 @@
     </div>
 
 </div>
+
+<div class="card">
+    <div class="card-content">
+        <span class="card-title">Rätt svar</span>
+        <ul class="collection with-header sortable">
+            <li class="collection-header">
+                <strong>{{ $question->title }}</strong>
+            </li>
+            @if ($question->answer)
+                @foreach($question->answer as $index => $answer)
+                    <li class="collection-item">
+                        {{ $answer }}
+                        <input type="hidden" name="answer[]" value="{{ $answer }}">
+                    </li>
+                @endforeach
+            @else
+                @foreach($question->alternatives as $index => $alternative)
+                    <li class="collection-item">
+                        {{ $alternative }}
+                        <input type="hidden" name="answer[]" value="{{ $alternative }}">
+                    </li>
+                @endforeach
+            @endif
+        </ul>
+        <div class="input-field">
+            <input type="submit" class="btn blue" value="Spara">
+        </div>
+    </div>
+</div>

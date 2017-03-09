@@ -14,8 +14,8 @@ class AuthTest extends TestCase {
         $socialLogin = Mockery::mock('App\Login\SocialLogin');
         $this->app->instance('App\Login\SocialLogin', $socialLogin);
 
-        $socialLogin->shouldReceive('login')->once();
-        $socialLogin->shouldReceive('handleCallback')->once()->andReturn((object) [
+        $socialLogin->shouldReceive('login');
+        $socialLogin->shouldReceive('handleCallback')->andReturn((object) [
             'id' => '12345',
             'name' => 'Stefan Ledin',
             'avatar' => 'http://lorempixel.com/100/100/',
@@ -40,8 +40,8 @@ class AuthTest extends TestCase {
         $socialLogin = Mockery::mock('App\Login\SocialLogin');
         $this->app->instance('App\Login\SocialLogin', $socialLogin);
 
-        $socialLogin->shouldReceive('login')->once();
-        $socialLogin->shouldReceive('handleCallback')->once()->andReturn((object)[
+        $socialLogin->shouldReceive('login');
+        $socialLogin->shouldReceive('handleCallback')->andReturn((object)[
             'id' => '00000',
             'name' => 'John Doe',
             'avatar' => 'http://lorempixel.com/100/100/',

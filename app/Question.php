@@ -62,10 +62,14 @@ class Question extends Model
         });
     }
 
-    /*public function worth()
+    public function worth()
     {
-        
-    }*/
+        $worthCalculator = 'App\Question\WorthCalculator\Type\\'.$this->type;
+        if (class_exists($worthCalculator)) {
+            return (new $worthCalculator($this))->count();
+        }
+        return $this->worth;
+    }
 
     /**
      * Leaderboard

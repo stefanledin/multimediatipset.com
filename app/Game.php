@@ -27,7 +27,7 @@ class Game extends Model {
     public function pointsAvaliable()
     {
         return $this->questionsWithAnswers()->reduce(function($total, $question) {
-            return $total + $question->worth;
+            return $total + $question->worth();
         }, 0);
     }
 

@@ -162,7 +162,7 @@ class AlternativesPredictionTest extends TestCase
         $user1_question3_answer = new Answer(['answer' => '1']);
         $user1->answers()->saveMany([$user1_question1_answer, $user1_question2_answer, $user1_question3_answer]);
 
-        $user2_question1_answer = new Answer(['answer' => '1']);
+        $user2_question1_answer = new Answer(['answer' => 'X']);
         $user2_question2_answer = new Answer(['answer' => '2']);
         $user2_question3_answer = new Answer(['answer' => '2']);
         $user2->answers()->saveMany([$user2_question1_answer, $user2_question2_answer, $user2_question3_answer]);
@@ -172,13 +172,13 @@ class AlternativesPredictionTest extends TestCase
         $question3->answers()->saveMany([$user1_question3_answer, $user2_question3_answer]);
 
         $this->assertCount(2, $game->questionsWithAnswers());
-        $this->assertCount(2, $question1->correctAnswers());
+        $this->assertCount(1, $question1->correctAnswers());
         
         // $question1
         $this->assertEquals($user1->username, $question1->leaderBoard()->players[0]->username);
         $this->assertEquals($user2->username, $question1->leaderBoard()->players[1]->username);
         $this->assertEquals(5, $question1->leaderBoard()->players[0]->points);
-        $this->assertEquals(5, $question1->leaderBoard()->players[1]->points);
+        $this->assertEquals(0, $question1->leaderBoard()->players[1]->points);
 
         // $question2
         $this->assertEquals($user2->username, $question2->leaderBoard()->players[0]->username);
@@ -188,12 +188,12 @@ class AlternativesPredictionTest extends TestCase
 
         // $game
         $this->assertEquals(6, $game->pointsAvaliable());
-        // 1. $user1->username | 6 poäng
-        $this->assertEquals(6, $game->leaderBoard()->players[0]->points);
-        $this->assertEquals($user2->username, $game->leaderBoard()->players[0]->username);
+        // 1. $user1->username | 5 poäng
+        $this->assertEquals(5, $game->leaderBoard()->players[0]->points);
+        $this->assertEquals($user1->username, $game->leaderBoard()->players[0]->username);
         
         // 2. $user2->username | 1/2 rätt | 1/6 poäng
-        $this->assertEquals(5, $game->leaderBoard()->players[1]->points);
+        $this->assertEquals(1, $game->leaderBoard()->players[1]->points);
 
     }
 
